@@ -28,7 +28,7 @@ import com.example.uikit.components.authorizationTitle
 import com.example.uikit.inputs.inputAndTitle
 
 @Composable
-fun loginInPass(){
+fun LoginInPass(){
 
     var state by remember { mutableStateOf(false) }
     var password by remember { mutableStateOf("") }
@@ -86,7 +86,7 @@ fun loginInPass(){
 fun PreviewloginInPass(){
 
     Box(modifier = Modifier.fillMaxSize().background(Color.White)) {
-        loginInPass()
+        LoginInPass()
     }
 
 }

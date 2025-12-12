@@ -27,7 +27,7 @@ import com.example.uikit.components.SpacerH
 import com.example.uikit.keyboard.keyBoard
 
 @Composable
-fun loginByPin(){
+fun LoginByPin(){
 
     var pinArray by remember { mutableStateOf(mutableListOf<Int>()) }
 
@@ -68,8 +68,6 @@ fun loginByPin(){
 @Composable
 fun PreviewloginByPin(){
 
-
-
-    loginByPin()
+    LoginByPin()
 
 }
