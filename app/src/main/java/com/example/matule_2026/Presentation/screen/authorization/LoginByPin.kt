@@ -46,12 +46,7 @@ fun loginByPin(){
                     modifier = Modifier.fillMaxWidth()
 
                     )
-                Text(
-                    pinArray.toString(), style = Typography().Title1_ExtraBold,
-                    color = Black, textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
 
-                )
             }
         }
 
