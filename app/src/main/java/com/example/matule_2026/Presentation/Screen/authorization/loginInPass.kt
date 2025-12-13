@@ -1,4 +1,4 @@
-package com.example.matule_2026.Presentation.screen.authorization
+package com.example.matule_2026.Presentation.Screen.authorization
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.movableContentOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -20,7 +19,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.uikit.UI.Accent
 import com.example.uikit.UI.Typography
-import com.example.uikit.UI.White
 import com.example.uikit.buttons.LogIn
 import com.example.uikit.buttons.bigButton
 import com.example.uikit.components.SpacerH

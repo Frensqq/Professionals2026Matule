@@ -1,6 +1,5 @@
-package com.example.matule_2026.Presentation.screen.authorization
+package com.example.matule_2026.Presentation.Screen.authorization
 
-import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,8 +23,6 @@ import com.example.uikit.UI.Placeholders
 import com.example.uikit.UI.Typography
 import com.example.uikit.components.SpacerH
 import com.example.uikit.keyboard.ballonsAndKeyboard
-import com.example.uikit.keyboard.keyBoard
-import kotlin.collections.mutableListOf
 
 @Composable
 fun CreatePin(){

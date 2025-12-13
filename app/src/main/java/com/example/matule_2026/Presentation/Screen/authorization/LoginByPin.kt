@@ -1,6 +1,5 @@
-package com.example.matule_2026.Presentation.screen.authorization
+package com.example.matule_2026.Presentation.Screen.authorization
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,13 +14,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.uikit.UI.Black
-import com.example.uikit.UI.Error
 import com.example.uikit.UI.Typography
 import com.example.uikit.components.SpacerH
 import com.example.uikit.keyboard.keyBoard
