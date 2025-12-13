@@ -72,9 +72,6 @@ fun Projects(){
                 SpacerH(72)
             }
         }
-
-
-
     }
 
     Box(modifier = Modifier.fillMaxSize(),
