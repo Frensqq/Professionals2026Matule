@@ -17,13 +17,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.matule_2026.Domain.Repository.UserRepository
+import com.example.matule_2026.Presentation.navigate.NavigationRoutes
 import com.example.uikit.UI.Black
 import com.example.uikit.UI.Typography
 import com.example.uikit.components.SpacerH
 import com.example.uikit.keyboard.keyBoard
 
 @Composable
-fun LoginByPin(){
+fun LoginByPin(navController: NavController){
 
     var pinArray by remember { mutableStateOf(mutableListOf<Int>()) }
 
@@ -56,14 +59,16 @@ fun LoginByPin(){
             }
         }
 
+        if (UserRepository.validatePinCode(pinArray.joinToString(""))){
+            navController.navigate(NavigationRoutes.MAIN)
+        }
     }
-
 }
 
-@Preview
-@Composable
-fun PreviewloginByPin(){
-
-    LoginByPin()
-
-}
+//@Preview
+//@Composable
+//fun PreviewloginByPin(){
+//
+//    LoginByPin()
+//
+//}

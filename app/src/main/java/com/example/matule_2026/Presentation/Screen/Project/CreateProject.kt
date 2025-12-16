@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,6 +29,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.matule_2026.Presentation.ViewModels.MainViewModel
+import com.example.matule_2026.Presentation.navigate.NavigationRoutes
 import com.example.matule_2026.R
 import com.example.uikit.UI.Black
 import com.example.uikit.UI.Description
@@ -36,15 +40,22 @@ import com.example.uikit.UI.Typography
 import com.example.uikit.buttons.bigButton
 import com.example.uikit.components.SpacerH
 import com.example.uikit.components.Tabbar
+import com.example.uikit.inputs.Date
 import com.example.uikit.inputs.inputAndTitle
+import com.example.uikit.selects.genderSelect
 import com.example.uikit.selects.select
 
 @Composable
-fun CreateProject(){
+fun CreateProject(navController: NavController, viewModel: MainViewModel){
+
+    val state = viewModel.state
 
     var category by remember { mutableStateOf("Проекты") }
+    var listTYPE = listOf<String>("Web", "Mobile","Desktop")
     var list = listOf<String>("Web", "Mobile","Desktop")
     var value by remember { mutableStateOf("") }
+
+
 
     LazyColumn(modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally) {
@@ -62,32 +73,47 @@ fun CreateProject(){
 
             SpacerH(13)
 
-            selectAndText("Тип", "","Выберите  тип",list,{} )
+            selectAndText("Тип", "","Выберите  тип",listTYPE,
+                {} )
 
             SpacerH(16)
 
-            inputAndTitle("Название проекта", value,true,false, "Введите имя", {currName ->
+            inputAndTitle("Название проекта", state.project?.title?: "",true,false,
+                "Введите имя", {currName ->
                 value = currName})
             SpacerH(16)
 
-            inputAndTitle("Дата начала", value,true,false, "--.--.----", {currDate ->
+            inputAndTitle("Дата начала", state.project?.dateStart?: "",true,false,
+                "--.--.----", {currDate ->
                 value = currDate})
             SpacerH(22)
 
-            inputAndTitle("Дата Окончания", value,true,false, "--.--.----", {currValue ->
+            inputAndTitle("Дата Окончания", state.project?.dateEnd?: "",true,false,
+                "--.--.----", {currValue ->
                 value = currValue})
             SpacerH(10)
 
-            selectAndText("Кому", "","Выберите  кому",list,{} )
+            var date by remember { mutableStateOf("") }
+
+            Date("--.--.----", date, {CurrentDate ->
+                date = CurrentDate
+
+            })
+
+            SpacerH(10)
+
+            genderSelect(value) { }
 
             SpacerH(16)
 
-            inputAndTitle("Источник описания", value,true,false, "example.com", {currValue ->
+            inputAndTitle("Источник описания", state.project?.description_source?: "",
+                true,false, "example.com", {currValue ->
                 value = currValue})
 
             SpacerH(17)
 
-            selectAndText("Категория", "","Выберите  категорию",list,{} )
+            selectAndText("Категория", state.project?.category?: "",
+                "Выберите  категорию",list,{} )
 
             SpacerH(37)
 
@@ -117,10 +143,12 @@ fun CreateProject(){
 
     Box(modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomCenter) {
-        Tabbar(category) {
-                currentCat ->
-            category = currentCat
-        }
+        Tabbar(category,
+            {navController.navigate(NavigationRoutes.MAIN)},
+            {navController.navigate(NavigationRoutes.CATALOG)},
+            {navController.navigate(NavigationRoutes.PROJECTS)},
+            {navController.navigate(NavigationRoutes.PROFILE)}
+        )
     }
 }
 
@@ -139,9 +167,9 @@ fun selectAndText(titleText:String,value: String,text: String, selectOptions: Li
 
 }
 
-@Preview
-@Composable
-fun PreviewCreateProject(){
-
-    CreateProject()
-}
+//@Preview
+//@Composable
+//fun PreviewCreateProject(){
+//
+//    CreateProject()
+//}

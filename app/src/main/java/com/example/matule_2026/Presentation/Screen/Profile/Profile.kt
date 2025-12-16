@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,7 +24,13 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.example.matule_2026.Domain.Repository.UserRepository
+import com.example.matule_2026.Presentation.ViewModels.AuthViewModel
+import com.example.matule_2026.Presentation.ViewModels.MainViewModel
+import com.example.matule_2026.Presentation.navigate.NavigationRoutes
 import com.example.matule_2026.R
+import com.example.networklibrary.domain.model.UserAuth
 import com.example.uikit.UI.Black
 import com.example.uikit.UI.Error
 import com.example.uikit.UI.Placeholders
@@ -34,10 +41,16 @@ import com.example.uikit.components.Tabbar
 import com.example.uikit.controls.toggle
 
 @Composable
-fun Profile(name: String, email: String){
+fun Profile(navController: NavHostController,viewModel: AuthViewModel){
 
+    val state = viewModel.state
     var category by remember { mutableStateOf("Профиль") }
-    var stateToggle by remember { mutableStateOf(false) }
+    var stateToggle by remember { mutableStateOf(UserRepository.notification) }
+
+    LaunchedEffect(Unit) {
+        viewModel.returnIdToken()
+        viewModel.getProfile()
+    }
 
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally) {
@@ -45,11 +58,11 @@ fun Profile(name: String, email: String){
         SpacerH(76)
 
         Column(Modifier.padding(horizontal = 20.dp).fillMaxWidth()) {
-            Text(name, style = Typography().Title1_ExtraBold, color = Black)
+            Text(state.CurrentUser?.firstname?:"", style = Typography().Title1_ExtraBold, color = Black)
 
             SpacerH(8)
 
-            Text(email, style = Typography().Headline_Regular, color = Placeholders)
+            Text(UserRepository.email, style = Typography().Headline_Regular, color = Placeholders)
 
             SpacerH(24)
 
@@ -84,6 +97,7 @@ fun Profile(name: String, email: String){
 
                 toggle(stateToggle) {
                     stateToggle = !stateToggle
+                    UserRepository.notification = stateToggle
                 }
             }
 
@@ -111,27 +125,51 @@ fun Profile(name: String, email: String){
 
             SpacerH(24)
 
+
             Text("Выход", style = Typography().Text_Medium,
                 color = Error,
                 modifier = Modifier.clickable{
 
-                })
+                    val id_logout = searchId(state.UserAuth)
+
+                    viewModel.logout(navController,id_logout ) }
+            )
         }
 
 
         Box(modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.BottomCenter) {
 
-            Tabbar(category) {
-
-            }
+            Tabbar(category,
+                {navController.navigate(NavigationRoutes.MAIN)},
+                {navController.navigate(NavigationRoutes.CATALOG)},
+                {navController.navigate(NavigationRoutes.PROJECTS)},
+                {navController.navigate(NavigationRoutes.PROFILE)}
+            )
         }
     }
 }
 
 
-@Preview
-@Composable
-fun PreviewProfile(){
-    Profile("Эдуард","afersfsr@dsfsr.ru")
+fun searchId(UserAuth: List<UserAuth>): String{
+
+    val user_id = UserRepository.UserID
+
+
+        UserAuth.forEach { elements ->
+
+
+            if (elements.recordRef == user_id) {
+                return elements.id
+            }
+        }
+
+
+    return ""
 }
+
+//@Preview
+//@Composable
+//fun PreviewProfile(){
+//    Profile()
+//}

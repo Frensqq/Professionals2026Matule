@@ -18,14 +18,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.matule_2026.Domain.Repository.UserRepository
+import com.example.matule_2026.Presentation.navigate.NavigationRoutes
 import com.example.uikit.UI.Black
 import com.example.uikit.UI.Placeholders
 import com.example.uikit.UI.Typography
 import com.example.uikit.components.SpacerH
 import com.example.uikit.keyboard.ballonsAndKeyboard
+import kotlin.collections.joinToString
 
 @Composable
-fun CreatePin(){
+fun CreatePin(navController: NavController){
 
     var pinCode by remember { mutableStateOf(listOf<Int>()) }
 
@@ -55,19 +59,23 @@ fun CreatePin(){
                 }
             }
         }
+    }
 
+    if (pinCode.size == 4){
+        UserRepository.pinCode = pinCode.joinToString("")
+        navController.navigate(NavigationRoutes.MAIN)
     }
 
 }
 
 
-@Preview
-@Composable
-fun PreviewCreatePin(){
-
-    Box(modifier = Modifier.fillMaxSize().background(Color.White)) {
-
-        CreatePin()
-    }
-
-}
+//@Preview
+//@Composable
+//fun PreviewCreatePin(){
+//
+//    Box(modifier = Modifier.fillMaxSize().background(Color.White)) {
+//
+//        CreatePin()
+//    }
+//
+//}

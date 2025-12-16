@@ -12,9 +12,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import com.example.matule_2026.DI.networkModule
+import com.example.matule_2026.Domain.Repository.UserRepository
+import com.example.matule_2026.Presentation.navigate.Navigation
 import com.example.matule_2026.ui.theme.Matule2026Theme
 import com.example.networklibrary.network.monitor.AndroidNetworkMonitor
 import kotlinx.coroutines.flow.MutableStateFlow
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.GlobalContext.startKoin
 
 class MainActivity : ComponentActivity() {
 
@@ -26,17 +31,22 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        startKoin {
+            androidContext(this@MainActivity)
+            modules(networkModule)
+        }
+
         networkState = AndroidNetworkMonitor(this)
         _isOnline.value = networkState.isConnected()
 
-
+        UserRepository.init(this)
         setContent {
             val isOnline by _isOnline.collectAsState()
 
             Matule2026Theme {
                 MaterialTheme{
                     Scaffold(modifier = Modifier.fillMaxSize()) {
-
+                        Navigation(isOnline)
                     }
                 }
             }

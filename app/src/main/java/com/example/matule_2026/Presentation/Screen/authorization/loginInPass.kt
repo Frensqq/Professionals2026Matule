@@ -14,9 +14,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.example.matule_2026.Presentation.ViewModels.AuthViewModel
+import com.example.matule_2026.Presentation.navigate.NavigationRoutes
 import com.example.uikit.UI.Accent
 import com.example.uikit.UI.Typography
 import com.example.uikit.buttons.LogIn
@@ -26,11 +27,11 @@ import com.example.uikit.components.authorizationTitle
 import com.example.uikit.inputs.inputAndTitle
 
 @Composable
-fun LoginInPass(){
+fun LoginInPass(navController: NavHostController, viewModel: AuthViewModel){
 
-    var state by remember { mutableStateOf(false) }
-    var password by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
+    val state = viewModel.state
+
+    var isNotNull = if(state.email!="" && state.password!= "") true else false
 
     Column(modifier = Modifier.padding(horizontal = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally) {
@@ -41,34 +42,31 @@ fun LoginInPass(){
 
         SpacerH(64)
 
-        inputAndTitle("Вход по E-mail", email,false,
-            false,"example@mail.com") { CurrentEmail ->
-            email = CurrentEmail
-        }
+        inputAndTitle("Вход по E-mail", state.email,false,
+            !state.error.isNullOrEmpty(),"example@mail.com")
+        { viewModel.updateState(state.copy(email = it))}
 
         SpacerH(14)
 
-        inputAndTitle("Пароль", password,true,
-            false,"") {CurrentPass ->
-            password = CurrentPass
-        }
+        inputAndTitle("Пароль", state.password,true,
+            !state.error.isNullOrEmpty() ,"")
+        { viewModel.updateState(state.copy(password = it))}
         SpacerH(14)
 
-        bigButton("Далее", state) {
-
+        bigButton("Далее", isNotNull) {
+            viewModel.Auth(state.email,state.password,navController)
         }
         SpacerH(15)
         Text("Зарегистрироваться",
             style = Typography().Text_Regular,
             color = Accent,
             modifier = Modifier.clickable{
-
+                navController.navigate(NavigationRoutes.CREATEPROFILE){
+                }
             })
 
 
-
         Box(modifier = Modifier.fillMaxSize().padding(bottom = 56.dp), contentAlignment = Alignment.BottomCenter) {
-
             LogIn({}, {})
         }
 
@@ -79,12 +77,12 @@ fun LoginInPass(){
 
 }
 
-@Preview
-@Composable
-fun PreviewloginInPass(){
-
-    Box(modifier = Modifier.fillMaxSize().background(Color.White)) {
-        LoginInPass()
-    }
-
-}
+//@Preview
+//@Composable
+//fun PreviewloginInPass(){
+//
+//    Box(modifier = Modifier.fillMaxSize().background(Color.White)) {
+//        LoginInPass()
+//    }
+//
+//}

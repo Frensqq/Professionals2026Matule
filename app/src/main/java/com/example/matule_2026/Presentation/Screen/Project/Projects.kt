@@ -1,5 +1,6 @@
 package com.example.matule_2026.Presentation.Screen.Project
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,6 +25,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.example.matule_2026.Presentation.ViewModels.MainViewModel
+import com.example.matule_2026.Presentation.navigate.NavigationRoutes
 import com.example.uikit.R
 import com.example.uikit.UI.Black
 import com.example.uikit.UI.InputIcon
@@ -34,11 +39,17 @@ import com.example.uikit.components.SpacerW
 import com.example.uikit.components.Tabbar
 
 @Composable
-fun Projects(){
+fun Projects(navController: NavHostController, viewModel: MainViewModel){
 
     var category by remember { mutableStateOf("Проекты") }
 
 
+
+    LaunchedEffect(Unit) {
+        viewModel.getProject()
+    }
+
+    val listProject = viewModel.state.listProject
 
     Column(modifier = Modifier.fillMaxSize()) {
 
@@ -52,7 +63,10 @@ fun Projects(){
                 color = Black, modifier = Modifier.padding(top = 2.dp))
 
             Icon(painter = painterResource(R.drawable.icon_plus),
-                contentDescription = null, modifier = Modifier.padding(top = 6.dp).size(20.dp),
+                contentDescription = null, modifier = Modifier.padding(top = 6.dp).size(20.dp).
+                clickable{
+                    navController.navigate(NavigationRoutes.CREATEPROJECTS)
+                },
                 tint = Placeholders
             )
 
@@ -62,8 +76,8 @@ fun Projects(){
         LazyColumn(modifier = Modifier.padding(horizontal = 20.dp),
 
         )
-        {items(5){
-            projectCard("Мой первый проект", "2") {
+        {items(listProject.size){
+            projectCard(listProject[it].title, listProject[it].created) {
 
             }
             SpacerH(16)
@@ -76,16 +90,18 @@ fun Projects(){
 
     Box(modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomCenter) {
-        Tabbar(category) {
-                currentCat ->
-            category = currentCat
-        }
+        Tabbar(category,
+            {navController.navigate(NavigationRoutes.MAIN)},
+            {navController.navigate(NavigationRoutes.CATALOG)},
+            {navController.navigate(NavigationRoutes.PROJECTS)},
+            {navController.navigate(NavigationRoutes.PROFILE)}
+        )
     }
 
 }
 
-@Preview
-@Composable
-fun PreviewProjects(){
-    Projects()
-}
+//@Preview
+//@Composable
+//fun PreviewProjects(){
+//    Projects()
+//}
