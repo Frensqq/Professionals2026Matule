@@ -22,11 +22,19 @@ data class MainState (
     var listCart: List<ResponseCart> = emptyList(),
     var Cart: ResponseCart? = null,
 
-
-
     val TabSelected:Int = 0,
     val notification: Boolean = false,
 
+
+    //createProject
+
+    var type: String = "",
+    var name: String = "",
+    var dateEnd: String = "",
+    var dateStart: String = "",
+    var gender: String = "",
+    var description: String = "",
+    var category: String = "",
 
     var isLoading:Boolean = false,
     var isSuccess:Boolean =false,

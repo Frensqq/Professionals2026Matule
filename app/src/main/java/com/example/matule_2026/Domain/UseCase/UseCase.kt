@@ -1,9 +1,11 @@
 package com.example.matule_2026.Domain.UseCase
 
 import com.example.networklibrary.domain.model.NetworkResult
+import com.example.networklibrary.domain.model.Project
 import com.example.networklibrary.domain.model.RequestAuth
 import com.example.networklibrary.domain.model.RequestCart
 import com.example.networklibrary.domain.model.RequestOrder
+import com.example.networklibrary.domain.model.RequestProject
 import com.example.networklibrary.domain.model.RequestRegister
 import com.example.networklibrary.domain.model.ResponseAuth
 import com.example.networklibrary.domain.model.ResponseCart
@@ -59,6 +61,10 @@ class UseCase(private val Repository: PBRepository) {
         return Repository.createOrder(request)
     }
 
+    suspend fun CreateProject(request: RequestProject):NetworkResult<Project>{
+        return Repository.createProject(request)
+    }
+
     suspend fun AddCart(request: RequestCart):NetworkResult<ResponseCart>{
         return Repository.createBucket(request)
     }
@@ -77,6 +83,10 @@ class UseCase(private val Repository: PBRepository) {
 
     suspend fun getProject(filter: String?):NetworkResult<ResponsesProject>{
         return Repository.listProject(filter)
+    }
+
+    suspend fun getOrders(filter: String?):NetworkResult<ResponseOrder>{
+        return Repository.(filter)
     }
 
     suspend fun getProfile(id:String):NetworkResult<User>{

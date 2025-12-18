@@ -25,4 +25,6 @@ object NavigationRoutes {
     const val PROJECTS = "projects"
 
     const val CREATEPROJECTS = "createprojects"
+
+    const val ORDERS = "orders"
 }

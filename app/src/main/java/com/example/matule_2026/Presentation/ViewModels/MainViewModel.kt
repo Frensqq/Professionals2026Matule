@@ -4,17 +4,21 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.example.matule_2026.Domain.Repository.UserRepository
 import com.example.matule_2026.Domain.UseCase.UseCase
 
 import com.example.matule_2026.Presentation.State.MainState
+import com.example.matule_2026.Presentation.navigate.NavigationRoutes
 import com.example.networklibrary.data.remoute.PBApiServis
 import com.example.networklibrary.domain.model.NetworkResult
 import com.example.networklibrary.domain.model.Product
 import com.example.networklibrary.domain.model.RequestCart
 import com.example.networklibrary.domain.model.RequestOrder
+import com.example.networklibrary.domain.model.RequestProject
 import com.example.networklibrary.domain.model.ResponseCart
 import com.example.networklibrary.domain.model.ResponseOrder
+import com.example.uikit.components.WarningWindow
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val useCase: UseCase): ViewModel() {
@@ -103,12 +107,12 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
         }
     }
 
-    fun createOrders(product_id: String) {
+    fun createOrders(product_id: String, count: Int) {
         viewModelScope.launch {
             try {
                 when (val result = useCase.CreateOrders(request = RequestOrder(
                     UserRepository.UserID,
-                            product_id,1
+                            product_id, count
                 ) )) {
                     is NetworkResult.Error -> {
                         Log.i("Ошибка создание заказа", result.error.message.toString())
@@ -124,6 +128,39 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
                 }
             } catch (e: Exception) {
                 Log.i("Ошибка Создание заказа", e.message.toString())
+            }
+        }
+    }
+
+    fun createProject(navController: NavController) {
+        viewModelScope.launch {
+            try {
+                when (val result = useCase.CreateProject(request = RequestProject(
+                  title = state.name,
+                    typeProject = state.type,
+                    user_id = UserRepository.UserID,
+                    dateStart = state.dateStart,
+                    dateEnd = state.dateEnd,
+                    gender = state.gender,
+                    category = state.category,
+                    description_source = state.description
+                ) )) {
+                    is NetworkResult.Error -> {
+                        Log.i("Ошибка создание проекта", result.error.message.toString())
+                    }
+
+                    is NetworkResult.Success -> {
+                        Log.d("Создание проекта", result.data.id)
+
+                        updateState(state.copy(project = result.data?: null ))
+
+                        navController.navigate(NavigationRoutes.PROJECTS)
+                        Log.e("Создание проекта state", state.listProduct.toString())
+                    }
+                    is NetworkResult.NoInternet -> {}
+                }
+            } catch (e: Exception) {
+                Log.i("Ошибка Создание проекта", e.message.toString())
             }
         }
     }

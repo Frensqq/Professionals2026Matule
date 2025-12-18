@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.matule_2026.Presentation.Screen.Main.Cart
 import com.example.matule_2026.Presentation.Screen.Main.Catalog
 import com.example.matule_2026.Presentation.Screen.Main.MainScreen
+import com.example.matule_2026.Presentation.Screen.Profile.Orders
 import com.example.matule_2026.Presentation.Screen.Profile.Profile
 import com.example.matule_2026.Presentation.Screen.Project.CreateProject
 import com.example.matule_2026.Presentation.Screen.Project.Projects
@@ -67,6 +68,9 @@ fun Navigation(isOnline: Boolean) {
         }
         composable(NavigationRoutes.SIGNINPIN){
             LoginByPin(navController)
+        }
+        composable(NavigationRoutes.ORDERS){
+            Orders(navController, MainViewModel)
         }
     }
 }
