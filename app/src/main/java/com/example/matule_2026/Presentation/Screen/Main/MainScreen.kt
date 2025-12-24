@@ -1,6 +1,7 @@
 package com.example.matule_2026.Presentation.Screen.Main
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -46,8 +47,6 @@ fun MainScreen(navController: NavHostController,viewModel: MainViewModel){
     var category by remember { mutableStateOf("Главная") }
     var searchString by remember { mutableStateOf("") }
 
-
-
     val state = viewModel.state
 
     LaunchedEffect(Unit) {
@@ -59,8 +58,14 @@ fun MainScreen(navController: NavHostController,viewModel: MainViewModel){
     val listNews = state.listNews
     val ListProduct = state.listProduct
 
+
+
     val ListCateg: List<String> = listOf("Все","Популярные","Женщинам","Мужчинам","Детям","Аксессуары")
     var currentCategory by remember { mutableStateOf(ListCateg[0]) }
+
+    var stateOpen by remember { mutableStateOf(false) }
+    var index by remember {   mutableStateOf(-1)}
+    var indexList by remember {   mutableStateOf(-1)}
 
     Column(modifier = Modifier.fillMaxSize().padding(start = 20.dp)) {
 
@@ -139,15 +144,23 @@ fun MainScreen(navController: NavHostController,viewModel: MainViewModel){
             val indexCart = (state.listCart.mapNotNull { it.product_id }).indexOf(ListProduct[it].id)
             var stateBut = indexCart!=-1
 
-            primaryCard(ListProduct[it].title,
-                ListProduct[it].type,ListProduct[it].price ,
-                !stateBut,{
-                    if (!stateBut) viewModel.addCart(ListProduct[it].id)
-                    else  viewModel.deleteCart(state.listCart[indexCart]?.id ?: "")
-                    stateBut = !stateBut
+            Box(modifier = Modifier.clickable{
+                index = it
+                stateOpen = true
+                indexList = indexCart
 
-                    viewModel.viewCart()
-                })
+            }) {
+
+                primaryCard(
+                    ListProduct[it].title,
+                    ListProduct[it].type, ListProduct[it].price,
+                    !stateBut, {
+                        if (!stateBut) viewModel.addCart(ListProduct[it].id)
+                        else viewModel.deleteCart(state.listCart[indexCart]?.id ?: "")
+                        stateBut = !stateBut
+                        viewModel.viewCart()
+                    })
+            }
 
             SpacerH(16)
         }
@@ -157,21 +170,34 @@ fun MainScreen(navController: NavHostController,viewModel: MainViewModel){
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomCenter) {
+    if (stateOpen){
+        ProductDetails(stateOpen.toString(),ListProduct[index].title,
+            onExit = { stateOpen = false
+            } , stateOpen, {
 
-        Tabbar(category,
-             {navController.navigate(NavigationRoutes.MAIN)},
-             {navController.navigate(NavigationRoutes.CATALOG)},
-            {navController.navigate(NavigationRoutes.PROJECTS)},
-           {navController.navigate(NavigationRoutes.PROFILE)}
-        )
+                var stateBut = indexList !=-1
+
+                if (!stateBut) viewModel.addCart(ListProduct[index].id)
+                else viewModel.deleteCart(state.listCart[indexList]?.id ?: "")
+                stateBut = !stateBut
+                viewModel.viewCart()
+
+            }, ListProduct[index].price)
     }
+    else {
 
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+
+            Tabbar(
+                category,
+                { navController.navigate(NavigationRoutes.MAIN) },
+                { navController.navigate(NavigationRoutes.CATALOG) },
+                { navController.navigate(NavigationRoutes.PROJECTS) },
+                { navController.navigate(NavigationRoutes.PROFILE) }
+            )
+        }
+    }
 }
-
-//@Preview
-//@Composable
-//fun PreviewMainScreen(){
-//    MainScreen()
-//}

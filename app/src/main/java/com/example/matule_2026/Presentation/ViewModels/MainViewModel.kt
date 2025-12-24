@@ -1,7 +1,10 @@
 package com.example.matule_2026.Presentation.ViewModels
 
 import android.util.Log
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -132,6 +135,27 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
         }
     }
 
+    fun getOrders() {
+        viewModelScope.launch {
+            try {
+                when (val result = useCase.getOrders("user_id = '${UserRepository.UserID}'")) {
+                    is NetworkResult.Error -> {
+                        Log.i("Ошибка вывод заказов", result.error.message.toString())
+                    }
+                    is NetworkResult.Success -> {
+                        Log.d("Заказы ", result.data.items.toString())
+
+                        updateState(state.copy(listOrders = result.data?.items ?: emptyList()))
+                        Log.e("Заказы вывод state", state.listProduct.toString())
+                    }
+                    is NetworkResult.NoInternet -> {}
+                }
+            } catch (e: Exception) {
+                Log.i("Ошибка вывод заказов", e.message.toString())
+            }
+        }
+    }
+
     fun createProject(navController: NavController) {
         viewModelScope.launch {
             try {
@@ -237,9 +261,6 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
             }
         }
     }
-
-
-
     fun deleteCart(id: String) {
         viewModelScope.launch {
             try {
@@ -299,4 +320,64 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
 //            }
 //        }
 //    }
+
+
+
+
+    var selectedImageUri by mutableStateOf<android.net.Uri?>(null)
+    var selectedImageName by mutableStateOf("")
+
+    fun createProjectWithImage(
+        navController: NavController,
+        context: android.content.Context  // Добавить контекст
+    ) {
+        viewModelScope.launch {
+            try {
+                when (val result = useCase.createProjectWithImage(
+                    title = state.name,
+                    typeProject = state.type,
+                    user_id = UserRepository.UserID,
+                    dateStart = state.dateStart,
+                    dateEnd = state.dateEnd,
+                    gender = state.gender,
+                    category = state.category,
+                    description_source = state.description,
+                    imageUri = selectedImageUri,
+                    imageFileName = selectedImageName
+                )) {
+                    is NetworkResult.Error -> {
+                        Log.i("Ошибка создание проекта с изображением", result.error.message.toString())
+                    }
+
+                    is NetworkResult.Success -> {
+                        Log.d("Создание проекта с изображением", result.data.id)
+                        updateState(state.copy(project = result.data ?: null))
+
+                        // Сбросить изображение после успешной загрузки
+                        selectedImageUri = null
+                        selectedImageName = ""
+
+                        navController.navigate(NavigationRoutes.PROJECTS)
+                    }
+                    is NetworkResult.NoInternet -> {}
+                }
+            } catch (e: Exception) {
+                Log.i("Ошибка Создание проекта с изображением", e.message.toString())
+            }
+        }
+    }
+
+    // Метод для выбора изображения
+    fun selectImage(uri: android.net.Uri, context: android.content.Context) {
+        selectedImageUri = uri
+        selectedImageName = getFileNameFromUri(context, uri)
+    }
+
+    private fun getFileNameFromUri(context: android.content.Context, uri: android.net.Uri): String {
+        return context.contentResolver.query(uri, null, null, null, null)?.use { cursor ->
+            val nameIndex = cursor.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME)
+            cursor.moveToFirst()
+            cursor.getString(nameIndex) ?: "image_${System.currentTimeMillis()}.jpg"
+        } ?: "image_${System.currentTimeMillis()}.jpg"
+    }
 }

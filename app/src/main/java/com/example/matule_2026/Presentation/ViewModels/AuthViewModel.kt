@@ -1,21 +1,22 @@
 package com.example.matule_2026.Presentation.ViewModels
 
+import android.app.DownloadManager
+import android.content.Context
+import android.net.Uri
+import android.os.Environment
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import coil.util.CoilUtils.result
 import com.example.matule_2026.Domain.Repository.UserRepository
 import com.example.matule_2026.Domain.UseCase.UseCase
 import com.example.matule_2026.Domain.patterns.isEmailValid
 import com.example.matule_2026.Presentation.State.AuthState
 import com.example.matule_2026.Presentation.navigate.NavigationRoutes
 import com.example.networklibrary.domain.model.NetworkResult
-import com.example.networklibrary.domain.model.UsersAuth
 import kotlinx.coroutines.launch
-import kotlin.invoke
 
 class AuthViewModel(private val UseCase: UseCase): ViewModel() {
 
@@ -184,6 +185,26 @@ class AuthViewModel(private val UseCase: UseCase): ViewModel() {
             }
 
 
+        }
+    }
+
+
+    fun downloadPdf(context: Context, pdfUrl: String, fileName: String = "document.pdf") {
+        try {
+            val request = DownloadManager.Request(Uri.parse(pdfUrl))
+                .setTitle("Скачивание PDF")
+                .setDescription("Файл скачивается...")
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
+                .setAllowedOverMetered(true) // Скачивать по мобильному интернету
+                .setAllowedOverRoaming(true) // Скачивать в роуминге
+
+            val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+            downloadManager.enqueue(request)
+
+            Toast.makeText(context, "Скачивание началось", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Toast.makeText(context, "Ошибка: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -6,6 +6,7 @@ import com.example.networklibrary.domain.model.RequestAuth
 import com.example.networklibrary.domain.model.RequestCart
 import com.example.networklibrary.domain.model.RequestOrder
 import com.example.networklibrary.domain.model.RequestProject
+import com.example.networklibrary.domain.model.RequestProjectImage
 import com.example.networklibrary.domain.model.RequestRegister
 import com.example.networklibrary.domain.model.ResponseAuth
 import com.example.networklibrary.domain.model.ResponseCart
@@ -14,6 +15,7 @@ import com.example.networklibrary.domain.model.ResponseProducts
 import com.example.networklibrary.domain.model.ResponseRegister
 import com.example.networklibrary.domain.model.ResponsesCart
 import com.example.networklibrary.domain.model.ResponsesNews
+import com.example.networklibrary.domain.model.ResponsesOrders
 import com.example.networklibrary.domain.model.ResponsesProject
 import com.example.networklibrary.domain.model.User
 import com.example.networklibrary.domain.model.UsersAuth
@@ -85,8 +87,8 @@ class UseCase(private val Repository: PBRepository) {
         return Repository.listProject(filter)
     }
 
-    suspend fun getOrders(filter: String?):NetworkResult<ResponseOrder>{
-        return Repository.(filter)
+    suspend fun getOrders(filter: String?):NetworkResult<ResponsesOrders>{
+        return Repository.listOrders(filter)
     }
 
     suspend fun getProfile(id:String):NetworkResult<User>{
@@ -104,5 +106,32 @@ class UseCase(private val Repository: PBRepository) {
         return Repository.redactBucket(id_bucket, request)
     }
 
+    suspend fun createProjectWithImage(
+        title: String,
+        typeProject: String,
+        user_id: String,
+        dateStart: String,
+        dateEnd: String,
+        gender: String,
+        description_source: String,
+        category: String,
+        imageUri: android.net.Uri?,
+        imageFileName: String = ""
+    ): NetworkResult<Project> {
+        return Repository.createProjectWithImage(
+            request = RequestProjectImage(
+                title = title,
+                typeProject = typeProject,
+                user_id = user_id,
+                dateStart = dateStart,
+                dateEnd = dateEnd,
+                gender = gender,
+                description_source = description_source,
+                category = category,
+                imageUri = imageUri,
+                imageFileName = imageFileName
+            )
+        )
+    }
 
 }

@@ -53,7 +53,7 @@ dependencies {
     implementation(files("libs/networkLibrary-debug.aar"))
     implementation("androidx.navigation:navigation-compose:2.8.7")
 
-
+    implementation("com.google.accompanist:accompanist-permissions:0.32.0")
     implementation("androidx.core:core-splashscreen:1.0.0")
     implementation("io.coil-kt:coil-compose:2.7.0")
     implementation("io.insert-koin:koin-android:3.5.0")

@@ -1,5 +1,6 @@
 package com.example.matule_2026.Presentation.Screen.Main
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +20,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.matule_2026.Presentation.ViewModels.MainViewModel
 import com.example.matule_2026.Presentation.navigate.NavigationRoutes
+import com.example.networklibrary.domain.model.Product
+import com.example.networklibrary.domain.model.ProductItem
+import com.example.networklibrary.domain.model.ResponseCart
 import com.example.uikit.buttons.cartButton
 import com.example.uikit.cards.primaryCard
 import com.example.uikit.components.SpacerH
@@ -44,7 +48,13 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
     val ListCateg: List<String> = listOf("Все","Популярные","Женщинам","Мужчинам","Детям","Аксессуары")
     var currentCategory by remember { mutableStateOf(ListCateg[0]) }
 
-    var cost by remember { mutableStateOf(0) }
+    var stateOpen by remember { mutableStateOf(false) }
+    var index by remember {   mutableStateOf(-1)}
+    var indexList by remember {   mutableStateOf(-1)}
+
+    val totalCost = remember(listProduct, state.listCart) {
+        calculateTotalCost(listProduct,state.listCart)
+    }
 
     Column(modifier = Modifier.padding(horizontal = 20.dp)) {
 
@@ -66,21 +76,31 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
 
         SpacerH(20)
 
+
         LazyColumn( )
         {items(listProduct.size){
 
             val indexCart = (state.listCart.mapNotNull { it.product_id }).indexOf(listProduct[it].id)
             var stateBut = indexCart!=-1
 
-            primaryCard(listProduct[it].title,
-                listProduct[it].type,listProduct[it].price ,
-                !stateBut,{
-                    if (!stateBut) viewModel.addCart(listProduct[it].id)
-                    else  viewModel.deleteCart(state.listCart[indexCart]?.id ?: "")
-                    stateBut = !stateBut
 
-                    viewModel.viewCart()
-                })
+            Box(modifier = Modifier.clickable{
+                index = it
+                stateOpen = true
+                indexList = indexCart
+
+            }) {
+
+                primaryCard(
+                    listProduct[it].title,
+                    listProduct[it].type, listProduct[it].price,
+                    !stateBut, {
+                        if (!stateBut) viewModel.addCart(listProduct[it].id)
+                        else viewModel.deleteCart(state.listCart[indexCart]?.id ?: "")
+                        stateBut = !stateBut
+                        viewModel.viewCart()
+                    })
+            }
 
             SpacerH(16)
         }
@@ -89,17 +109,44 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
                 SpacerH(42)
             }
         }
+
+
     }
 
-    Box(modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomCenter) {
+    if (stateOpen){
+        ProductDetails(stateOpen.toString(),listProduct[index].title,
+            onExit = { stateOpen = false
+            } , stateOpen, {
+
+                var stateBut = indexList !=-1
+
+                if (!stateBut) {
+                    viewModel.addCart(listProduct[index].id)
+                    viewModel.viewCart()
+                }
+                else{ viewModel.deleteCart(state.listCart[indexList]?.id ?: "")
+                stateBut = !stateBut
+                viewModel.viewCart()
+                }
+
+            }, listProduct[index].price)
+    }
+    else {
+
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.BottomCenter
+        ) {
 
 
-            Box(modifier = Modifier.padding(bottom = 92.dp, start = 20.dp, end = 20.dp).height(120.dp)
-                .fillMaxWidth(),
-                contentAlignment = Alignment.Center) {
+            Box(
+                modifier = Modifier.padding(bottom = 92.dp, start = 20.dp, end = 20.dp)
+                    .height(120.dp)
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
 
-                cartButton(cost, {
+                cartButton(totalCost, {
                     navController.navigate(NavigationRoutes.CART)
 
                 })
@@ -107,14 +154,28 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
             }
 
 
-        Tabbar(category,
-            {navController.navigate(NavigationRoutes.MAIN)},
-            {navController.navigate(NavigationRoutes.CATALOG)},
-            {navController.navigate(NavigationRoutes.PROJECTS)},
-            {navController.navigate(NavigationRoutes.PROFILE)}
-        )
+            Tabbar(
+                category,
+                { navController.navigate(NavigationRoutes.MAIN) },
+                { navController.navigate(NavigationRoutes.CATALOG) },
+                { navController.navigate(NavigationRoutes.PROJECTS) },
+                { navController.navigate(NavigationRoutes.PROFILE) }
+            )
+        }
+    }
+}
+
+
+ fun calculateTotalCost(listProduct: List<ProductItem>, listCart: List<ResponseCart>): Int {
+    var total = 0
+
+    listCart.forEach { cartItem ->
+        listProduct.find { it.id == cartItem.product_id }?.let { product ->
+            total += product.price * cartItem.count
+        }
     }
 
+    return total
 }
 
 //@Preview

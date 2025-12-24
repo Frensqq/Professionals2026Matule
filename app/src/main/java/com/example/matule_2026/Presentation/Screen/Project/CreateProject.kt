@@ -1,5 +1,9 @@
 package com.example.matule_2026.Presentation.Screen.Project
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,9 +27,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.example.matule_2026.Presentation.ViewModels.MainViewModel
 import com.example.matule_2026.Presentation.navigate.NavigationRoutes
 import com.example.matule_2026.R
@@ -41,17 +48,26 @@ import com.example.uikit.inputs.inputAndTitleDate
 import com.example.uikit.selects.genderSelect
 import com.example.uikit.selects.select
 
+
 @Composable
 fun CreateProject(navController: NavController, viewModel: MainViewModel){
 
     var state = viewModel.state
+    val context = LocalContext.current
 
     var category by remember { mutableStateOf("Проекты") }
     var listTYPE = listOf<String>("Web", "Mobile","Desktop")
     var list = listOf<String>("Web", "Mobile","Desktop")
     var value by remember { mutableStateOf("") }
 
-
+    // Лаунчер для выбора изображения из галереи
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            viewModel.selectImage(it, context)
+        }
+    }
 
     LazyColumn(modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally) {
@@ -89,7 +105,7 @@ fun CreateProject(navController: NavController, viewModel: MainViewModel){
             SpacerH(22)
 
             inputAndTitleDate("Дата Окончания", "--.--.----", state.dateEnd,
-               {viewModel.updateState(state.copy(dateEnd = it))})
+                {viewModel.updateState(state.copy(dateEnd = it))})
             SpacerH(10)
 
             var date by remember { mutableStateOf("") }
@@ -116,22 +132,57 @@ fun CreateProject(navController: NavController, viewModel: MainViewModel){
 
             SpacerH(37)
 
-            Box(modifier = Modifier.height(192.dp).width(202.dp).
-            clip(RoundedCornerShape(10.dp)).background(InputBg).
-                clickable{
-
+            // БЛОК ДЛЯ ИЗОБРАЖЕНИЯ (ЗАМЕНИТЬ СУЩЕСТВУЮЩИЙ)
+            Box(modifier = Modifier.height(192.dp).width(202.dp)
+                .clip(RoundedCornerShape(10.dp)).background(InputBg)
+                .clickable {
+                    // Открываем галерею при клике
+                    galleryLauncher.launch("image/*")
                 },
                 contentAlignment = Alignment.Center) {
 
-                Icon(painter = painterResource(R.drawable.plus),
-                    contentDescription = null, tint = Description
-                )
+                if (viewModel.selectedImageUri != null) {
+                    // Показываем выбранное изображение
+                    Image(
+                        painter = rememberAsyncImagePainter(model = viewModel.selectedImageUri),
+                        contentDescription = "Selected image",
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                } else {
+                    // Показываем иконку плюса если нет изображения
+                    Icon(
+                        painter = painterResource(R.drawable.plus),
+                        contentDescription = "Добавить фото",
+                        tint = Description
+                    )
+                }
             }
 
-            SpacerH(32)
+            SpacerH(16)
 
+            // Текст под изображением
+            if (viewModel.selectedImageUri != null) {
+                Text(
+                    text = "Фото выбрано",
+                    style = Typography().Caption_Regular,
+                    color = Description,
+
+                )
+                SpacerH(16)
+            }
+
+            SpacerH(16)
+
+            // ИЗМЕНЕННАЯ КНОПКА
             bigButton("Подтвердить", true) {
-                viewModel.createProject(navController)
+                if (viewModel.selectedImageUri != null) {
+                    // Используем новый метод с изображением
+                    viewModel.createProjectWithImage(navController, context)
+                } else {
+                    // Используем старый метод без изображения
+                    viewModel.createProject(navController)
+                }
             }
 
             SpacerH(103)

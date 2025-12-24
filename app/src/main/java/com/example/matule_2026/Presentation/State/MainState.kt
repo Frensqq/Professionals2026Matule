@@ -15,6 +15,7 @@ data class MainState (
     val listProject: List<Project> = emptyList(),
     val listNews: List<News> = emptyList(),
     val project: Project? = null,
+    var product: ProductItem? = null,
 
     val listOrders: List<ResponseOrder> = emptyList(),
     val Order: ResponseOrder? = null,

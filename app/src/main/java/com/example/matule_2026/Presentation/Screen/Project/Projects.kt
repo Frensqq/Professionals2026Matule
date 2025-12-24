@@ -46,6 +46,9 @@ fun Projects(navController: NavHostController, viewModel: MainViewModel){
         viewModel.getProject()
     }
 
+    var stateOpen by remember { mutableStateOf(false) }
+    var index by remember {   mutableStateOf(-1)}
+
     val listProject = viewModel.state.listProject
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -74,8 +77,10 @@ fun Projects(navController: NavHostController, viewModel: MainViewModel){
 
         )
         {items(listProject.size){
-            projectCard(listProject[it].title, listProject[it].created) {
 
+            projectCard(listProject[it].title, listProject[it].created) {
+                index = it
+                stateOpen = true
             }
             SpacerH(16)
         }
@@ -84,15 +89,26 @@ fun Projects(navController: NavHostController, viewModel: MainViewModel){
             }
         }
     }
+    if (stateOpen){
+        ProjectDetails(listProject[index].description_source,listProject[index].title) {
+            stateOpen = false
+        }
 
-    Box(modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomCenter) {
-        Tabbar(category,
-            {navController.navigate(NavigationRoutes.MAIN)},
-            {navController.navigate(NavigationRoutes.CATALOG)},
-            {navController.navigate(NavigationRoutes.PROJECTS)},
-            {navController.navigate(NavigationRoutes.PROFILE)}
-        )
+    }
+    else {
+
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            Tabbar(
+                category,
+                { navController.navigate(NavigationRoutes.MAIN) },
+                { navController.navigate(NavigationRoutes.CATALOG) },
+                { navController.navigate(NavigationRoutes.PROJECTS) },
+                { navController.navigate(NavigationRoutes.PROFILE) }
+            )
+        }
     }
 
 }

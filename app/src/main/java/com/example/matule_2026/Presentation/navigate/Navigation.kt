@@ -70,7 +70,8 @@ fun Navigation(isOnline: Boolean) {
             LoginByPin(navController)
         }
         composable(NavigationRoutes.ORDERS){
-            Orders(navController, MainViewModel)
+            Orders(MainViewModel, navController)
         }
+
     }
 }

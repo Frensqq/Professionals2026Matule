@@ -30,7 +30,8 @@ val networkModule = module {
     single<PBRepository> {
         PBRepositoryImpl(
             api = get<PBApi>(),
-            networkMonitor = get<NetworkMonitor>()
+            networkMonitor = get<NetworkMonitor>(),
+            context = androidContext()
         )
     }
 

@@ -1,5 +1,6 @@
 package com.example.matule_2026.Presentation.Screen.Main
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,14 +33,20 @@ import com.example.uikit.header.headerCart
 @Composable
 fun Cart(navController: NavHostController,viewModel: MainViewModel){
 
-    var Cost = 2490
-
     LaunchedEffect(Unit) {
         viewModel.viewCart()
         viewModel.getProduct()
+
     }
 
     var state = viewModel.state
+
+    val listProduct = state.listProduct
+    val listCart = state.listCart
+
+    val totalCost = remember(listProduct, listCart) {
+        calculateTotalCost(listProduct,listCart)
+    }
 
     Column(modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp)) {
 
@@ -47,7 +54,7 @@ fun Cart(navController: NavHostController,viewModel: MainViewModel){
 
         headerCart({
 
-            state.listCart.forEach {
+            listCart.forEach {
                 index->
                 viewModel.deleteCart(index.id)
             }
@@ -57,35 +64,49 @@ fun Cart(navController: NavHostController,viewModel: MainViewModel){
 
         SpacerH(32)
 
-        LazyColumn()
-        {items(state.listCart.size){
 
-            val indexCart = (state.listProduct.mapNotNull { it.id }).indexOf(state.listCart[it].product_id)
 
-            cardCart(state.listProduct[indexCart].title,
-                state.listProduct[indexCart].price,
-                state.listCart[it].count, {CurrentPrice->
-                    viewModel.changeCart(state.listCart[it].id,
-                        state.listProduct[indexCart].id, CurrentPrice)
-                    viewModel.viewCart()
+        if (listProduct.isNotEmpty()) {
+            LazyColumn()
+            {
+                items(listCart.size) {
 
-                },
-                { viewModel.deleteCart(state.listProduct[indexCart].id)})
+                    val indexCart =
+                        (listProduct.mapNotNull { it.id }).indexOf(listCart[it].product_id)
 
-            SpacerH(32)
-        }
-            item {
+                    cardCart(
+                        listProduct[indexCart].title,
+                        listProduct[indexCart].price,
+                        listCart[it].count, { CurrentPrice ->
+                            viewModel.changeCart(
+                                listCart[it].id,
+                                listProduct[indexCart].id, CurrentPrice
+                            )
+                            viewModel.viewCart()
 
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text("Сумма", style = Typography().Title2_SemiBold, color = Black)
+                        },
+                        { viewModel.deleteCart(state.listCart[it].id)
+                            viewModel.viewCart()
+                        })
 
-                    Text("$Cost ₽", style = Typography().Title2_SemiBold, color = Black)
+
+                    SpacerH(32)
                 }
+                item {
 
-                SpacerH(120)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text("Сумма", style = Typography().Title2_SemiBold, color = Black)
+
+                        Text("$totalCost ₽", style = Typography().Title2_SemiBold, color = Black)
+                    }
+
+                    SpacerH(120)
+                }
             }
         }
-
     }
 
     var StateButton by remember { mutableStateOf(false) }
@@ -98,22 +119,11 @@ fun Cart(navController: NavHostController,viewModel: MainViewModel){
         }
 
         bigButton("Перейти к оформлению заказа", true) {
-
+            viewModel.viewCart()
             state.listCart.forEach {item->
                 viewModel.createOrders(item.product_id, item.count)
                 StateButton = true
             }
-
         }
-
-
     }
 }
-
-//@Preview
-//@Composable
-//fun PreviewCart(){
-//
-//    Cart()
-//
-//}

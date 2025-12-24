@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -44,6 +45,7 @@ fun Profile(navController: NavHostController,viewModel: AuthViewModel){
     val state = viewModel.state
     var category by remember { mutableStateOf("Профиль") }
     var stateToggle by remember { mutableStateOf(UserRepository.notification) }
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.returnIdToken()
@@ -64,8 +66,8 @@ fun Profile(navController: NavHostController,viewModel: AuthViewModel){
 
             SpacerH(24)
 
-            Row(modifier = Modifier.height(64.dp).clickable{
-
+            Row(modifier = Modifier.fillMaxWidth().height(64.dp).clickable{
+                navController.navigate(NavigationRoutes.ORDERS)
             },
                 verticalAlignment = Alignment.CenterVertically){
                 Image(bitmap = ImageBitmap.imageResource(R.drawable.zakaz),
@@ -110,7 +112,11 @@ fun Profile(navController: NavHostController,viewModel: AuthViewModel){
             Text("Политика конфиденциальности", style = Typography().Text_Medium,
                 color = Placeholders,
                 modifier = Modifier.clickable{
-
+                    viewModel.downloadPdf(
+                        context = context,
+                        pdfUrl = "https://drive.google.com/uc?export=download&id=1wVS9ZZxiYP08udQvtt6PWKBipgnbU8At",
+                        fileName = "Политика конфиденциальности.pdf"
+                    )
                 })
 
             SpacerH(24)
@@ -118,7 +124,11 @@ fun Profile(navController: NavHostController,viewModel: AuthViewModel){
             Text("Пользовательское соглашение", style = Typography().Text_Medium,
                 color = Placeholders,
                 modifier = Modifier.clickable{
-
+                    viewModel.downloadPdf(
+                        context = context,
+                        pdfUrl = "https://drive.google.com/uc?export=download&id=1jd7sXYRUIhxdDuvGWhmPs2OZHVDWn0HD",
+                        fileName = "Пользовательское соглашение.pdf"
+                    )
                 })
 
             SpacerH(24)
