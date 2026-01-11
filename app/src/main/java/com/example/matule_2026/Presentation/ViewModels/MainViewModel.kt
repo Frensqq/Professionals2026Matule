@@ -3,25 +3,19 @@ package com.example.matule_2026.Presentation.ViewModels
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.matule_2026.Domain.Repository.UserRepository
 import com.example.matule_2026.Domain.UseCase.UseCase
-
 import com.example.matule_2026.Presentation.State.MainState
 import com.example.matule_2026.Presentation.navigate.NavigationRoutes
 import com.example.networklibrary.data.remoute.PBApiServis
 import com.example.networklibrary.domain.model.NetworkResult
-import com.example.networklibrary.domain.model.Product
 import com.example.networklibrary.domain.model.RequestCart
 import com.example.networklibrary.domain.model.RequestOrder
 import com.example.networklibrary.domain.model.RequestProject
-import com.example.networklibrary.domain.model.ResponseCart
-import com.example.networklibrary.domain.model.ResponseOrder
-import com.example.uikit.components.WarningWindow
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val useCase: UseCase): ViewModel() {

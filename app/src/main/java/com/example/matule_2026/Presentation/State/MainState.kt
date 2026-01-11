@@ -2,12 +2,10 @@ package com.example.matule_2026.Presentation.State
 
 
 import com.example.networklibrary.domain.model.News
-import com.example.networklibrary.domain.model.Product
 import com.example.networklibrary.domain.model.ProductItem
 import com.example.networklibrary.domain.model.Project
 import com.example.networklibrary.domain.model.ResponseCart
 import com.example.networklibrary.domain.model.ResponseOrder
-import com.example.networklibrary.domain.model.ResponsesCart
 
 data class MainState (
 

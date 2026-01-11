@@ -60,7 +60,6 @@ fun CreateProject(navController: NavController, viewModel: MainViewModel){
     var list = listOf<String>("Web", "Mobile","Desktop")
     var value by remember { mutableStateOf("") }
 
-    // Лаунчер для выбора изображения из галереи
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->

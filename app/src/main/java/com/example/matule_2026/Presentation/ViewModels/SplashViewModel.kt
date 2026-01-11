@@ -8,7 +8,6 @@ import com.example.matule_2026.Domain.Repository.UserRepository
 import com.example.matule_2026.Presentation.navigate.NavigationRoutes
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.toString
 
 
 class SplashViewModel(): ViewModel() {

@@ -5,18 +5,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.matule_2026.Presentation.ViewModels.AuthViewModel
 import com.example.matule_2026.Presentation.navigate.NavigationRoutes
@@ -26,7 +20,6 @@ import com.example.uikit.UI.Typography
 import com.example.uikit.buttons.bigButton
 import com.example.uikit.components.SpacerH
 import com.example.uikit.inputs.Date
-import com.example.uikit.inputs.inputAndTitleDate
 import com.example.uikit.inputs.textInputField
 import com.example.uikit.selects.genderSelect
 

@@ -23,10 +23,8 @@ val networkModule = module {
 
     single<NetworkMonitor> { AndroidNetworkMonitor(androidContext()) }
 
-    // PBApi (ваш готовый Retrofit API)
     single<PBApi> { PBApiServis.instance }
 
-    // PBRepository (ваша библиотека)
     single<PBRepository> {
         PBRepositoryImpl(
             api = get<PBApi>(),
@@ -35,10 +33,8 @@ val networkModule = module {
         )
     }
 
-    // UseCase
     factory { UseCase(get()) }
 
-    // ViewModels
     viewModel { AuthViewModel(get()) }
     viewModel { MainViewModel(get()) }
     viewModel { SplashViewModel() }

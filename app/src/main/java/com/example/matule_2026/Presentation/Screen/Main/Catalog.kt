@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.matule_2026.Presentation.ViewModels.MainViewModel
 import com.example.matule_2026.Presentation.navigate.NavigationRoutes
-import com.example.networklibrary.domain.model.Product
 import com.example.networklibrary.domain.model.ProductItem
 import com.example.networklibrary.domain.model.ResponseCart
 import com.example.uikit.buttons.cartButton
@@ -95,10 +94,11 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
                     listProduct[it].title,
                     listProduct[it].type, listProduct[it].price,
                     !stateBut, {
-                        if (!stateBut) viewModel.addCart(listProduct[it].id)
-                        else viewModel.deleteCart(state.listCart[indexCart]?.id ?: "")
+                        if (!stateBut){ viewModel.addCart(listProduct[it].id)
+                        viewModel.viewCart()}
+                        else {viewModel.deleteCart(state.listCart[indexCart]?.id ?: "")
                         stateBut = !stateBut
-                        viewModel.viewCart()
+                        viewModel.viewCart()}
                     })
             }
 
@@ -177,11 +177,3 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
 
     return total
 }
-
-//@Preview
-//@Composable
-//fun PreviewCatalog(){
-//
-//    Catalog()
-//
-//}

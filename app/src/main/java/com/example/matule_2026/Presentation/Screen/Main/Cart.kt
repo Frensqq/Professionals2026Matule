@@ -1,6 +1,5 @@
 package com.example.matule_2026.Presentation.Screen.Main
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,7 +38,7 @@ fun Cart(navController: NavHostController,viewModel: MainViewModel){
 
     }
 
-    var state = viewModel.state
+    val state = viewModel.state
 
     val listProduct = state.listProduct
     val listCart = state.listCart
@@ -83,9 +82,9 @@ fun Cart(navController: NavHostController,viewModel: MainViewModel){
                                 listProduct[indexCart].id, CurrentPrice
                             )
                             viewModel.viewCart()
-
                         },
-                        { viewModel.deleteCart(state.listCart[it].id)
+                        {
+                            viewModel.deleteCart(listCart[it].id)
                             viewModel.viewCart()
                         })
 
