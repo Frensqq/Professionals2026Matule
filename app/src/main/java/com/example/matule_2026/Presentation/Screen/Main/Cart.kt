@@ -81,6 +81,7 @@ fun Cart(navController: NavHostController,viewModel: MainViewModel){
                                 listCart[it].id,
                                 listProduct[indexCart].id, CurrentPrice
                             )
+                            viewModel.getProduct()
                             viewModel.viewCart()
                         },
                         {
