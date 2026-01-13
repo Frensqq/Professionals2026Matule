@@ -1,5 +1,6 @@
 package com.example.matule_2026.Presentation.State
 
+import com.example.networklibrary.domain.model.ApiError
 import com.example.networklibrary.domain.model.User
 import com.example.networklibrary.domain.model.UserAuth
 

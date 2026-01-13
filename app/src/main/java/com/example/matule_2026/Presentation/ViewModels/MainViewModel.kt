@@ -11,7 +11,7 @@ import com.example.matule_2026.Domain.Repository.UserRepository
 import com.example.matule_2026.Domain.UseCase.UseCase
 import com.example.matule_2026.Presentation.State.MainState
 import com.example.matule_2026.Presentation.navigate.NavigationRoutes
-import com.example.networklibrary.data.remoute.PBApiServis
+import com.example.networklibrary.data.remote.PBApiServis
 import com.example.networklibrary.domain.model.NetworkResult
 import com.example.networklibrary.domain.model.RequestCart
 import com.example.networklibrary.domain.model.RequestOrder

@@ -23,11 +23,14 @@ import com.example.uikit.UI.Black
 import com.example.uikit.UI.Typography
 import com.example.uikit.components.SpacerH
 import com.example.uikit.keyboard.keyBoard
+import com.example.uikit.modal.snackBar
 
 @Composable
 fun LoginByPin(navController: NavController){
 
     var pinArray by remember { mutableStateOf(mutableListOf<Int>()) }
+
+    var error by remember { mutableStateOf(false) }
 
 
 
@@ -61,7 +64,20 @@ fun LoginByPin(navController: NavController){
         if (UserRepository.validatePinCode(pinArray.joinToString(""))){
             navController.navigate(NavigationRoutes.MAIN)
         }
+        else {
+            if (pinArray.joinToString("").length == 4 ) {
+                error = true
+                pinArray.clear()
+            }
+            else false
+        }
     }
+    if (error) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        snackBar(if (error)"Введен не верный пинкод" else{"верный"}) { error = false }
+    }}
+
+
 }
 
 //@Preview
