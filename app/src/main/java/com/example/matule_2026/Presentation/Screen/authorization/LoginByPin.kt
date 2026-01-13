@@ -32,8 +32,6 @@ fun LoginByPin(navController: NavController){
 
     var error by remember { mutableStateOf(false) }
 
-
-
     Column(modifier = Modifier.fillMaxSize()) {
         SpacerH(144)
 
@@ -50,7 +48,6 @@ fun LoginByPin(navController: NavController){
 
             }
         }
-
 
         SpacerH(132)
 
@@ -76,14 +73,4 @@ fun LoginByPin(navController: NavController){
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         snackBar(if (error)"Введен не верный пинкод" else{"верный"}) { error = false }
     }}
-
-
 }
-
-//@Preview
-//@Composable
-//fun PreviewloginByPin(){
-//
-//    LoginByPin()
-//
-//}

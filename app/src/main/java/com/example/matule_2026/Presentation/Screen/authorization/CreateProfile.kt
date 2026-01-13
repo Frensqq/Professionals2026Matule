@@ -71,9 +71,6 @@ fun CreateProfile(navController: NavHostController, viewModel:AuthViewModel){
             viewModel.updateState(state.copy(dateBirthday = it))
         })
 
-//        textInputField(state.dateBirthday,false,false,"Дата рождения") {
-//            viewModel.updateState(state.copy(dateBirthday = it))
-//        }
         SpacerH(24)
 
         genderSelect(state.gender) {
@@ -95,9 +92,3 @@ fun CreateProfile(navController: NavHostController, viewModel:AuthViewModel){
         }
     }
 }
-
-//@Preview
-//@Composable
-//fun PreviewCreateProfile(){
-//    CreateProfile()
-//}

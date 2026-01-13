@@ -278,46 +278,6 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
         }
     }
 
-
-//    fun getUser() {
-//
-//        viewModelScope.launch {
-//            updateState(state.copy(isLoading = true, error = null))
-//            try {
-//                when (val result = useCase.getProfile(UserRepository.UserID)) {
-//                    is NetworkResult.Error -> {
-//
-//                        updateState(state.copy(isLoading = false, error = result.error.message))
-//                        Log.d("Profile",result.error.message)
-//                        Log.d("Profile1",result.error.toString())
-//                    }
-//
-//                    is NetworkResult.Success -> {
-//
-//                        Log.d("Profile",result.data.toString())
-//
-//                        updateState(
-//                            state.copy(
-//                                name = result.data.firstname,
-//                            )
-//                        )
-//                        updateState(state.copy(isLoading = false, error = null))
-//
-//                    }
-//
-//                    is NetworkResult.NoInternet -> {}
-//
-//                }
-//
-//            } catch (e: Exception) {
-//                updateState(state.copy(isLoading = false, error = e.message.toString()))
-//            }
-//        }
-//    }
-
-
-
-
     var selectedImageUri by mutableStateOf<android.net.Uri?>(null)
     var selectedImageName by mutableStateOf("")
 

@@ -56,7 +56,7 @@ class AuthViewModel(private val UseCase: UseCase): ViewModel() {
                     }
                     Log.d("auth", state.error.toString())
                 } else {
-                    Log.d("auth", "8")
+                    Log.d("auth", "Пароль меньше 8 символов")
                     _state.value = _state.value.copy(error = "Пароль меньше 8 символов")
                 }
             } else {
@@ -197,7 +197,7 @@ class AuthViewModel(private val UseCase: UseCase): ViewModel() {
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                 .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
                 .setAllowedOverMetered(true) // Скачивать по мобильному интернету
-                .setAllowedOverRoaming(true) // Скачивать в роуминге
+                //.setAllowedOverRoaming(true) // Скачивать в роуминге
 
             val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
             downloadManager.enqueue(request)

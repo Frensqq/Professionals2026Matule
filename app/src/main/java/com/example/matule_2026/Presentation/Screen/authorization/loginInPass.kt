@@ -20,6 +20,7 @@ import com.example.uikit.buttons.bigButton
 import com.example.uikit.components.SpacerH
 import com.example.uikit.components.authorizationTitle
 import com.example.uikit.inputs.inputAndTitle
+import com.example.uikit.modal.snackBar
 
 @Composable
 fun LoginInPass(navController: NavHostController, viewModel: AuthViewModel){
@@ -66,18 +67,14 @@ fun LoginInPass(navController: NavHostController, viewModel: AuthViewModel){
         }
 
 
-
     }
+    if (!state.error.isNullOrEmpty()){
 
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 
+            snackBar("Ошибка \n ${state.error}") {
+                viewModel.updateState(state.copy(error = null))
+            }
+        }
+    }
 }
-
-//@Preview
-//@Composable
-//fun PreviewloginInPass(){
-//
-//    Box(modifier = Modifier.fillMaxSize().background(Color.White)) {
-//        LoginInPass()
-//    }
-//
-//}
