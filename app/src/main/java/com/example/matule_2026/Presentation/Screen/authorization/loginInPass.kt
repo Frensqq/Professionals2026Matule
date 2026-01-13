@@ -72,7 +72,7 @@ fun LoginInPass(navController: NavHostController, viewModel: AuthViewModel){
 
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 
-            snackBar("Ошибка \n ${state.error}") {
+            snackBar("Ошибка \n${state.error}") {
                 viewModel.updateState(state.copy(error = null))
             }
         }

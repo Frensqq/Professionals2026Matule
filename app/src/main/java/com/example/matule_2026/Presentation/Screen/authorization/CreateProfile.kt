@@ -21,6 +21,7 @@ import com.example.uikit.buttons.bigButton
 import com.example.uikit.components.SpacerH
 import com.example.uikit.inputs.Date
 import com.example.uikit.inputs.textInputField
+import com.example.uikit.modal.snackBar
 import com.example.uikit.selects.genderSelect
 
 @Composable
@@ -88,6 +89,15 @@ fun CreateProfile(navController: NavHostController, viewModel:AuthViewModel){
 
             bigButton("Далее",isNotNull) {
                 navController.navigate(NavigationRoutes.CREATEPASS)
+            }
+        }
+    }
+    if (!state.error.isNullOrEmpty()){
+
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+
+            snackBar("Ошибка \n${state.error}") {
+                viewModel.updateState(state.copy(error = null))
             }
         }
     }
