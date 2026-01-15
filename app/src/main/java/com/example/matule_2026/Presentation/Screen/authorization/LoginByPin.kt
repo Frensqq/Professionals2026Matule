@@ -30,6 +30,7 @@ fun LoginByPin(navController: NavController){
 
     var pinArray by remember { mutableStateOf(mutableListOf<Int>()) }
 
+
     var error by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -60,6 +61,7 @@ fun LoginByPin(navController: NavController){
 
         if (UserRepository.validatePinCode(pinArray.joinToString(""))){
             navController.navigate(NavigationRoutes.MAIN)
+            pinArray.clear()
         }
         else {
             if (pinArray.joinToString("").length == 4 ) {

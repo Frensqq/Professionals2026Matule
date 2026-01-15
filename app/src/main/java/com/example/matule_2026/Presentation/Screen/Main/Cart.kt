@@ -61,13 +61,14 @@ fun Cart(navController: NavHostController,viewModel: MainViewModel){
 
         }, { navController.navigate(NavigationRoutes.CATALOG)})
 
-        SpacerH(32)
-
-
 
         if (listProduct.isNotEmpty()) {
             LazyColumn()
             {
+                item {
+                    SpacerH(32)
+
+                }
                 items(listCart.size) {
 
                     val indexCart =

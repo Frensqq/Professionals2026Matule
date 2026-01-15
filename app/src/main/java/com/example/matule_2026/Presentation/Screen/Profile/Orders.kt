@@ -58,12 +58,14 @@ fun Orders(viewModel: MainViewModel, navController: NavController){
 
         }
 
-        SpacerH(32)
-
-
 
         LazyColumn( )
-        {items(listOrder.size){
+        {
+            item {
+
+                SpacerH(32)
+            }
+            items(listOrder.size){
 
             val indexCart = (state.listProduct.mapNotNull { it.id }).indexOf(listOrder[it].product_id)
             var stateBut = indexCart!=-1

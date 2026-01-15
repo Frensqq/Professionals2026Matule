@@ -67,7 +67,7 @@ fun MainScreen(navController: NavHostController,viewModel: MainViewModel){
     var index by remember {   mutableStateOf(-1)}
     var indexList by remember {   mutableStateOf(-1)}
 
-    Column(modifier = Modifier.fillMaxSize().padding(start = 20.dp)) {
+    Column(modifier = Modifier.fillMaxSize().padding(vertical = 20.dp, horizontal = 20.dp)) {
 
         SpacerH(68)
 
@@ -134,12 +134,12 @@ fun MainScreen(navController: NavHostController,viewModel: MainViewModel){
             {}
             )
 
-        SpacerH(25)
-
-
-
-        LazyColumn(modifier = Modifier.padding(end = 20.dp))
-        {items(ListProduct.size){
+        LazyColumn()
+        {
+            item {
+                SpacerH(25)
+            }
+            items(ListProduct.size){
 
             val indexCart = (state.listCart.mapNotNull { it.product_id }).indexOf(ListProduct[it].id)
             var stateBut = indexCart!=-1
@@ -168,6 +168,7 @@ fun MainScreen(navController: NavHostController,viewModel: MainViewModel){
                 SpacerH(42)
             }
         }
+
     }
 
     if (stateOpen){

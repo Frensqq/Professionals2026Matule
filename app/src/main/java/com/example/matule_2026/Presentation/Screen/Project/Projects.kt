@@ -71,12 +71,15 @@ fun Projects(navController: NavHostController, viewModel: MainViewModel){
             )
 
         }
-        SpacerH(18)
-
         LazyColumn(modifier = Modifier.padding(horizontal = 20.dp),
 
         )
-        {items(listProject.size){
+        {
+            item {
+                SpacerH(18)
+            }
+
+            items(listProject.size){
 
             projectCard(listProject[it].title, listProject[it].created) {
                 index = it
@@ -112,9 +115,3 @@ fun Projects(navController: NavHostController, viewModel: MainViewModel){
     }
 
 }
-
-//@Preview
-//@Composable
-//fun PreviewProjects(){
-//    Projects()
-//}

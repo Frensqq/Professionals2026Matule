@@ -73,11 +73,15 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
                 viewModel.viewCart()
             },{})
 
-        SpacerH(20)
-
 
         LazyColumn( )
-        {items(listProduct.size){
+        {
+            item {
+
+                SpacerH(20)
+            }
+
+            items(listProduct.size){
 
             val indexCart = (state.listCart.mapNotNull { it.product_id }).indexOf(listProduct[it].id)
             var stateBut = indexCart!=-1
