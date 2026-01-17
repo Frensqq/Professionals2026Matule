@@ -36,7 +36,7 @@ import com.example.uikit.UI.Placeholders
 import com.example.uikit.UI.Typography
 import com.example.uikit.components.SpacerH
 import com.example.uikit.components.SpacerW
-import com.example.uikit.components.Tabbar
+import com.example.uikit.components.TabBar
 import com.example.uikit.controls.toggle
 
 @Composable
@@ -44,6 +44,15 @@ fun Profile(navController: NavHostController,viewModel: AuthViewModel){
 
     val state = viewModel.state
     var category by remember { mutableStateOf("Профиль") }
+    if (category == "Главная"){
+        navController.navigate(NavigationRoutes.MAIN)
+    }
+    else if (category == "Каталог"){
+        navController.navigate(NavigationRoutes.CATALOG)
+    }
+    else if (category == "Проекты"){
+        navController.navigate(NavigationRoutes.PROFILE)
+    }
     var stateToggle by remember { mutableStateOf(UserRepository.notification) }
     val context = LocalContext.current
 
@@ -148,11 +157,9 @@ fun Profile(navController: NavHostController,viewModel: AuthViewModel){
         Box(modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.BottomCenter) {
 
-            Tabbar(category,
-                {navController.navigate(NavigationRoutes.MAIN)},
-                {navController.navigate(NavigationRoutes.CATALOG)},
-                {navController.navigate(NavigationRoutes.PROJECTS)},
-                {navController.navigate(NavigationRoutes.PROFILE)}
+            TabBar(category,
+                    {currentCategory ->
+                        category = currentCategory}
             )
         }
     }

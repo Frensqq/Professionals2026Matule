@@ -33,13 +33,21 @@ import com.example.uikit.UI.Typography
 import com.example.uikit.cards.projectCard
 import com.example.uikit.components.SpacerH
 import com.example.uikit.components.SpacerW
-import com.example.uikit.components.Tabbar
+import com.example.uikit.components.TabBar
 
 @Composable
 fun Projects(navController: NavHostController, viewModel: MainViewModel){
 
     var category by remember { mutableStateOf("Проекты") }
-
+    if (category == "Главная"){
+        navController.navigate(NavigationRoutes.MAIN)
+    }
+    else if (category == "Каталог"){
+        navController.navigate(NavigationRoutes.PROJECTS)
+    }
+    else if (category == "Профиль"){
+        navController.navigate(NavigationRoutes.PROFILE)
+    }
 
 
     LaunchedEffect(Unit) {
@@ -100,16 +108,12 @@ fun Projects(navController: NavHostController, viewModel: MainViewModel){
     }
     else {
 
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.BottomCenter
-        ) {
-            Tabbar(
-                category,
-                { navController.navigate(NavigationRoutes.MAIN) },
-                { navController.navigate(NavigationRoutes.CATALOG) },
-                { navController.navigate(NavigationRoutes.PROJECTS) },
-                { navController.navigate(NavigationRoutes.PROFILE) }
+        Box(modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.BottomCenter) {
+
+            TabBar(category,
+                {currentCategory ->
+                    category = currentCategory}
             )
         }
     }

@@ -29,6 +29,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
+import com.example.matule_2026.Domain.Repository.UserRepository
 import com.example.matule_2026.Presentation.ViewModels.MainViewModel
 import com.example.matule_2026.Presentation.navigate.NavigationRoutes
 import com.example.uikit.UI.Accent
@@ -37,7 +38,7 @@ import com.example.uikit.UI.Typography
 import com.example.uikit.cards.primaryCard
 import com.example.uikit.components.SpacerH
 import com.example.uikit.components.SpacerW
-import com.example.uikit.components.Tabbar
+import com.example.uikit.components.TabBar
 import com.example.uikit.components.categoryMenu
 import com.example.uikit.search.searchField
 
@@ -45,6 +46,16 @@ import com.example.uikit.search.searchField
 fun MainScreen(navController: NavHostController,viewModel: MainViewModel){
 
     var category by remember { mutableStateOf("Главная") }
+    if (category == "Профиль"){
+        navController.navigate(NavigationRoutes.MAIN)
+    }
+    else if (category == "Каталог"){
+        navController.navigate(NavigationRoutes.CATALOG)
+    }
+    else if (category == "Проекты"){
+        navController.navigate(NavigationRoutes.PROFILE)
+    }
+    var stateToggle by remember { mutableStateOf(UserRepository.notification) }
     var searchString by remember { mutableStateOf("") }
 
     val state = viewModel.state
@@ -192,12 +203,10 @@ fun MainScreen(navController: NavHostController,viewModel: MainViewModel){
             contentAlignment = Alignment.BottomCenter
         ) {
 
-            Tabbar(
-                category,
-                { navController.navigate(NavigationRoutes.MAIN) },
-                { navController.navigate(NavigationRoutes.CATALOG) },
-                { navController.navigate(NavigationRoutes.PROJECTS) },
-                { navController.navigate(NavigationRoutes.PROFILE) }
+            TabBar(category,
+                { currentCategory ->
+                    category = currentCategory
+                }
             )
         }
     }

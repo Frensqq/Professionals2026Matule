@@ -19,10 +19,10 @@ import com.example.uikit.UI.Placeholders
 import com.example.uikit.UI.Typography
 import com.example.uikit.buttons.bigButton
 import com.example.uikit.components.SpacerH
-import com.example.uikit.inputs.Date
+import com.example.uikit.inputs.DateInput
 import com.example.uikit.inputs.textInputField
 import com.example.uikit.modal.snackBar
-import com.example.uikit.selects.genderSelect
+import com.example.uikit.selects.Select
 
 @Composable
 fun CreateProfile(navController: NavHostController, viewModel:AuthViewModel){
@@ -32,6 +32,7 @@ fun CreateProfile(navController: NavHostController, viewModel:AuthViewModel){
         Log.d("44",state.dateBirthday)
     }
 
+    var list = listOf<String>("Web", "Mobile","Desktop")
 
     var isNotNull = if(state.name!= "" && state.surname!= ""&& state.lastname!= ""&& state.gender!= ""&& state.dateBirthday!= "") true else false
 
@@ -68,13 +69,13 @@ fun CreateProfile(navController: NavHostController, viewModel:AuthViewModel){
             viewModel.updateState(state.copy(surname = it))
         }
         SpacerH(24)
-        Date("Дата рождения",state.dateBirthday,{
+        DateInput("Дата рождения",state.dateBirthday,{
             viewModel.updateState(state.copy(dateBirthday = it))
         })
 
         SpacerH(24)
 
-        genderSelect(state.gender) {
+        Select(state.gender,"Пол", list) {
             viewModel.updateState(state.copy(gender = it))
         }
 

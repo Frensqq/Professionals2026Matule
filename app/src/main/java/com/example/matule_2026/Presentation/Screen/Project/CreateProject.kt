@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,11 +43,10 @@ import com.example.uikit.UI.InputBg
 import com.example.uikit.UI.Typography
 import com.example.uikit.buttons.bigButton
 import com.example.uikit.components.SpacerH
-import com.example.uikit.components.Tabbar
+import com.example.uikit.components.TabBar
 import com.example.uikit.inputs.inputAndTitle
 import com.example.uikit.inputs.inputAndTitleDate
-import com.example.uikit.selects.genderSelect
-import com.example.uikit.selects.select
+import com.example.uikit.selects.Select
 
 
 @Composable
@@ -56,9 +56,20 @@ fun CreateProject(navController: NavController, viewModel: MainViewModel){
     val context = LocalContext.current
 
     var category by remember { mutableStateOf("Проекты") }
+
+    if (category == "Главная"){
+        navController.navigate(NavigationRoutes.MAIN)
+    }
+    else if (category == "Каталог"){
+        navController.navigate(NavigationRoutes.CATALOG)
+    }
+    else if (category == "Профиль"){
+        navController.navigate(NavigationRoutes.PROFILE)
+    }
+
     var listTYPE = listOf<String>("Web", "Mobile","Desktop")
     var list = listOf<String>("Web", "Mobile","Desktop")
-    var value by remember { mutableStateOf("") }
+    var genderList = listOf<String>("Мужской", "Женский","Другое")
 
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -111,7 +122,7 @@ fun CreateProject(navController: NavController, viewModel: MainViewModel){
 
             SpacerH(10)
 
-            genderSelect(state.gender) {
+            Select(state.gender, "Пол",genderList) {
                 viewModel.updateState(state.copy(gender = it))
             }
 
@@ -131,17 +142,14 @@ fun CreateProject(navController: NavController, viewModel: MainViewModel){
 
             SpacerH(37)
 
-            // БЛОК ДЛЯ ИЗОБРАЖЕНИЯ (ЗАМЕНИТЬ СУЩЕСТВУЮЩИЙ)
             Box(modifier = Modifier.height(192.dp).width(202.dp)
                 .clip(RoundedCornerShape(10.dp)).background(InputBg)
                 .clickable {
-                    // Открываем галерею при клике
                     galleryLauncher.launch("image/*")
                 },
                 contentAlignment = Alignment.Center) {
 
                 if (viewModel.selectedImageUri != null) {
-                    // Показываем выбранное изображение
                     Image(
                         painter = rememberAsyncImagePainter(model = viewModel.selectedImageUri),
                         contentDescription = "Selected image",
@@ -149,7 +157,6 @@ fun CreateProject(navController: NavController, viewModel: MainViewModel){
                         contentScale = ContentScale.Crop
                     )
                 } else {
-                    // Показываем иконку плюса если нет изображения
                     Icon(
                         painter = painterResource(R.drawable.plus),
                         contentDescription = "Добавить фото",
@@ -160,7 +167,6 @@ fun CreateProject(navController: NavController, viewModel: MainViewModel){
 
             SpacerH(16)
 
-            // Текст под изображением
             if (viewModel.selectedImageUri != null) {
                 Text(
                     text = "Фото выбрано",
@@ -173,13 +179,10 @@ fun CreateProject(navController: NavController, viewModel: MainViewModel){
 
             SpacerH(16)
 
-            // ИЗМЕНЕННАЯ КНОПКА
             bigButton("Подтвердить", true) {
                 if (viewModel.selectedImageUri != null) {
-                    // Используем новый метод с изображением
                     viewModel.createProjectWithImage(navController, context)
                 } else {
-                    // Используем старый метод без изображения
                     viewModel.createProject(navController)
                 }
             }
@@ -191,11 +194,10 @@ fun CreateProject(navController: NavController, viewModel: MainViewModel){
 
     Box(modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomCenter) {
-        Tabbar(category,
-            {navController.navigate(NavigationRoutes.MAIN)},
-            {navController.navigate(NavigationRoutes.CATALOG)},
-            {navController.navigate(NavigationRoutes.PROJECTS)},
-            {navController.navigate(NavigationRoutes.PROFILE)}
+        TabBar(category,
+            { currentCategory ->
+                category = currentCategory
+            }
         )
     }
 }
@@ -208,16 +210,9 @@ fun selectAndText(titleText:String,value: String,text: String, selectOptions: Li
         Text(titleText, style = Typography().Caption_Regular,
             color = Description)
         SpacerH(8)
-        select(value, text, selectOptions) { currentSelect ->
+        Select (value, text, selectOptions) { currentSelect ->
             onSelect(currentSelect)
         }
     }
 
 }
-
-//@Preview
-//@Composable
-//fun PreviewCreateProject(){
-//
-//    CreateProject()
-//}

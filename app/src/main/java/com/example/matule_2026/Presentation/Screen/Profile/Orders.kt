@@ -62,7 +62,6 @@ fun Orders(viewModel: MainViewModel, navController: NavController){
         LazyColumn( )
         {
             item {
-
                 SpacerH(32)
             }
             items(listOrder.size){
@@ -132,12 +131,9 @@ fun Orders(viewModel: MainViewModel, navController: NavController){
                     }
                 }
             }
-
-
             SpacerH(16)
         }
             item {
-
                 SpacerH(42)
             }
         }

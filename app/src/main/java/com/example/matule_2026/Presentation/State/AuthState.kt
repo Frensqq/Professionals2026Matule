@@ -12,9 +12,6 @@ data class AuthState (
     val UserAuth: List<UserAuth> = emptyList(),
     val CurrentUser: User? = null,
 
-//    var id:String ="",
-//    var token:String ="",
-
     var name:String ="",
     var surname:String ="",
     var lastname:String ="",

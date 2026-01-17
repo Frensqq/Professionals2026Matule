@@ -25,7 +25,7 @@ import com.example.networklibrary.domain.model.ResponseCart
 import com.example.uikit.buttons.cartButton
 import com.example.uikit.cards.primaryCard
 import com.example.uikit.components.SpacerH
-import com.example.uikit.components.Tabbar
+import com.example.uikit.components.TabBar
 import com.example.uikit.components.categoryMenu
 import com.example.uikit.header.headerCatalog
 
@@ -42,6 +42,15 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
     val listProduct = state.listProduct
 
     var category by remember { mutableStateOf("Каталог") }
+    if (category == "Главная"){
+        navController.navigate(NavigationRoutes.MAIN)
+    }
+    else if (category == "Проекты"){
+        navController.navigate(NavigationRoutes.PROJECTS)
+    }
+    else if (category == "Профиль"){
+        navController.navigate(NavigationRoutes.PROFILE)
+    }
     var searchString by remember { mutableStateOf("") }
 
     val ListCateg: List<String> = listOf("Все","Популярные","Женщинам","Мужчинам","Детям","Аксессуары")
@@ -158,12 +167,10 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
             }
 
 
-            Tabbar(
-                category,
-                { navController.navigate(NavigationRoutes.MAIN) },
-                { navController.navigate(NavigationRoutes.CATALOG) },
-                { navController.navigate(NavigationRoutes.PROJECTS) },
-                { navController.navigate(NavigationRoutes.PROFILE) }
+            TabBar(category,
+                { currentCategory ->
+                    category = currentCategory
+                }
             )
         }
     }
