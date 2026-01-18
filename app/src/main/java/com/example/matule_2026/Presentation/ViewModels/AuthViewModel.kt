@@ -34,7 +34,6 @@ class AuthViewModel(private val UseCase: UseCase): ViewModel() {
                 if (password.length >= 8) {
                     when(val res = UseCase(email, password)) {
                         is NetworkResult.Success -> {
-                            // Теперь используем data.record.id из вашей библиотеки
                             UserRepository.UserID = res.data.record.id
                             UserRepository.Token = res.data.token
                             UserRepository.act = 1
@@ -74,7 +73,6 @@ class AuthViewModel(private val UseCase: UseCase): ViewModel() {
                     UserRepository.UserID
                 )) {
                     is NetworkResult.Success -> {
-                        // Теперь используем data.id из вашей библиотеки
                         UserRepository.UserID = response.data.id
                         updateState(state.copy(
                             CurrentUser = response.data?: null)
@@ -106,7 +104,6 @@ class AuthViewModel(private val UseCase: UseCase): ViewModel() {
                     state.dateBirthday, state.gender
                 )) {
                     is NetworkResult.Success -> {
-                        // Теперь используем data.id из вашей библиотеки
                         UserRepository.UserID = response.data.id
                         UserRepository.email = state.email
 
@@ -196,8 +193,7 @@ class AuthViewModel(private val UseCase: UseCase): ViewModel() {
                 .setDescription("Файл скачивается...")
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                 .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
-                .setAllowedOverMetered(true) // Скачивать по мобильному интернету
-                //.setAllowedOverRoaming(true) // Скачивать в роуминге
+                .setAllowedOverMetered(true)
 
             val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
             downloadManager.enqueue(request)

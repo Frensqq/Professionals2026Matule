@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.matule_2026.Domain.Repository.UserRepository
@@ -51,7 +52,7 @@ fun Profile(navController: NavHostController,viewModel: AuthViewModel){
         navController.navigate(NavigationRoutes.CATALOG)
     }
     else if (category == "Проекты"){
-        navController.navigate(NavigationRoutes.PROFILE)
+        navController.navigate(NavigationRoutes.PROJECTS)
     }
     var stateToggle by remember { mutableStateOf(UserRepository.notification) }
     val context = LocalContext.current
@@ -103,7 +104,6 @@ fun Profile(navController: NavHostController,viewModel: AuthViewModel){
                         color = Black)
                 }
 
-
                 toggle(stateToggle) {
                     stateToggle = !stateToggle
                     UserRepository.notification = stateToggle
@@ -111,7 +111,6 @@ fun Profile(navController: NavHostController,viewModel: AuthViewModel){
             }
 
         }
-
 
         SpacerH(176)
 
@@ -126,7 +125,8 @@ fun Profile(navController: NavHostController,viewModel: AuthViewModel){
                         pdfUrl = "https://drive.google.com/uc?export=download&id=1wVS9ZZxiYP08udQvtt6PWKBipgnbU8At",
                         fileName = "Политика конфиденциальности.pdf"
                     )
-                })
+                }, textAlign = TextAlign.Center
+            )
 
             SpacerH(24)
 
@@ -138,10 +138,9 @@ fun Profile(navController: NavHostController,viewModel: AuthViewModel){
                         pdfUrl = "https://drive.google.com/uc?export=download&id=1jd7sXYRUIhxdDuvGWhmPs2OZHVDWn0HD",
                         fileName = "Пользовательское соглашение.pdf"
                     )
-                })
+                }, textAlign = TextAlign.Center)
 
             SpacerH(24)
-
 
             Text("Выход", style = Typography().Text_Medium,
                 color = Error,
@@ -153,7 +152,6 @@ fun Profile(navController: NavHostController,viewModel: AuthViewModel){
             )
         }
 
-
         Box(modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.BottomCenter) {
 
@@ -164,7 +162,6 @@ fun Profile(navController: NavHostController,viewModel: AuthViewModel){
         }
     }
 }
-
 
 fun searchId(UserAuth: List<UserAuth>): String{
 
@@ -182,9 +179,3 @@ fun searchId(UserAuth: List<UserAuth>): String{
 
     return ""
 }
-
-//@Preview
-//@Composable
-//fun PreviewProfile(){
-//    Profile()
-//}

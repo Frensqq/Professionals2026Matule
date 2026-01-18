@@ -47,13 +47,13 @@ fun MainScreen(navController: NavHostController,viewModel: MainViewModel){
 
     var category by remember { mutableStateOf("Главная") }
     if (category == "Профиль"){
-        navController.navigate(NavigationRoutes.MAIN)
+        navController.navigate(NavigationRoutes.PROFILE)
     }
     else if (category == "Каталог"){
         navController.navigate(NavigationRoutes.CATALOG)
     }
     else if (category == "Проекты"){
-        navController.navigate(NavigationRoutes.PROFILE)
+        navController.navigate(NavigationRoutes.PROJECTS)
     }
     var stateToggle by remember { mutableStateOf(UserRepository.notification) }
     var searchString by remember { mutableStateOf("") }

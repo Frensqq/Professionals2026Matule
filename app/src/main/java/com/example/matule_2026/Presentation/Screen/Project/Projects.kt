@@ -43,7 +43,7 @@ fun Projects(navController: NavHostController, viewModel: MainViewModel){
         navController.navigate(NavigationRoutes.MAIN)
     }
     else if (category == "Каталог"){
-        navController.navigate(NavigationRoutes.PROJECTS)
+        navController.navigate(NavigationRoutes.CATALOG)
     }
     else if (category == "Профиль"){
         navController.navigate(NavigationRoutes.PROFILE)
