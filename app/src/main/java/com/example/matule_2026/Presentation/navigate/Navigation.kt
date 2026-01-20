@@ -71,6 +71,5 @@ fun Navigation(isOnline: Boolean) {
         composable(NavigationRoutes.ORDERS){
             Orders(MainViewModel, navController)
         }
-
     }
 }

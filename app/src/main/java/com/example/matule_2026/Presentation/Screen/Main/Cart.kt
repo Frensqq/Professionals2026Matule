@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,8 +27,8 @@ import com.example.uikit.UI.Typography
 import com.example.uikit.buttons.bigButton
 import com.example.uikit.cards.cardCart
 import com.example.uikit.components.SpacerH
-import com.example.uikit.components.WarningWindow
 import com.example.uikit.header.headerCart
+import com.example.uikit.modal.snackBar
 
 @Composable
 fun Cart(navController: NavHostController,viewModel: MainViewModel){
@@ -116,7 +117,7 @@ fun Cart(navController: NavHostController,viewModel: MainViewModel){
         contentAlignment = Alignment.BottomCenter) {
 
         if (StateButton) {
-            StateButton = WarningWindow(StateButton, "Заказ создан", "")
+            snackBar( "Заказ создан",{StateButton = !StateButton})
         }
 
         bigButton("Перейти к оформлению заказа", true) {

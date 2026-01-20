@@ -82,11 +82,9 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
                 viewModel.viewCart()
             },{})
 
-
         LazyColumn( )
         {
             item {
-
                 SpacerH(20)
             }
 
@@ -102,7 +100,6 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
                 indexList = indexCart
 
             }) {
-
                 primaryCard(
                     listProduct[it].title,
                     listProduct[it].type, listProduct[it].price,
@@ -114,16 +111,12 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
                         viewModel.viewCart()}
                     })
             }
-
             SpacerH(16)
         }
             item {
-
                 SpacerH(42)
             }
         }
-
-
     }
 
     if (stateOpen){
@@ -141,7 +134,6 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
                 stateBut = !stateBut
                 viewModel.viewCart()
                 }
-
             }, listProduct[index].price)
     }
     else {
@@ -150,8 +142,6 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.BottomCenter
         ) {
-
-
             Box(
                 modifier = Modifier.padding(bottom = 92.dp, start = 20.dp, end = 20.dp)
                     .height(120.dp)
@@ -165,8 +155,6 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
                 })
 
             }
-
-
             TabBar(category,
                 { currentCategory ->
                     category = currentCategory

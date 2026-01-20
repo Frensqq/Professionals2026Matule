@@ -2,7 +2,6 @@ package com.example.matule_2026.Presentation.Screen.Profile
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -71,9 +70,9 @@ fun Orders(viewModel: MainViewModel, navController: NavController){
 
 
             if (stateBut) {
-                Box() {
 
-                    backgroundCards()
+
+                    backgroundCards{
 
                     Column(
                         modifier = Modifier.fillMaxWidth().height(138.dp),
