@@ -90,7 +90,6 @@ fun Orders(viewModel: MainViewModel, navController: NavController){
                                 maxLines = 2, color = Black, modifier = Modifier.fillMaxWidth(0.9f)
                             )
 
-
                             Icon(
                                 painter = painterResource(R.drawable.close),
                                 contentDescription = null,
@@ -98,7 +97,6 @@ fun Orders(viewModel: MainViewModel, navController: NavController){
 
                                 },
                                 tint = Description,
-
                                 )
                         }
 

@@ -29,22 +29,18 @@ fun ProductDetails(description: String, name: String,onExit: () -> Unit, stateBu
         ) {
 
             Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.Bottom) {
-                modal(name) {
-                    onExit()
-                }
+                modal(name, { onExit()}) {
+                    Column(modifier = Modifier.background(Color.White).padding(horizontal = 20.dp)) {
+                        Text("Описание", style = Typography().Headline_Medium, color = Placeholders)
+                        SpacerH(8)
 
-                Column(modifier = Modifier.background(Color.White).padding(horizontal = 20.dp)) {
-                    SpacerH(20)
-                    Text("Описание", style = Typography().Headline_Medium, color = Placeholders)
-                    SpacerH(8)
-
-                    Text(
-                        description,
-
-                        )
-                    SpacerH(49)
-                    bigButton("Добавить за $cost ₽", stateButton) { onClick() }
-                    SpacerH(40)
+                        Text(
+                            description,
+                            )
+                        SpacerH(49)
+                        bigButton("Добавить за $cost ₽", stateButton) { onClick() }
+                        SpacerH(40)
+                    }
                 }
             }
         }

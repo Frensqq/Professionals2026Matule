@@ -101,7 +101,8 @@ fun Projects(navController: NavHostController, viewModel: MainViewModel){
         }
     }
     if (stateOpen){
-        ProjectDetails(listProject[index].description_source,listProject[index].title) {
+        ProjectDetails(listProject[index].description_source,
+            listProject[index].title) {
             stateOpen = false
         }
 

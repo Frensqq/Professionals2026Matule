@@ -26,22 +26,16 @@ fun ProjectDetails(description: String, name: String,onExit: () -> Unit){
         modifier = Modifier.fillMaxSize().background(Black.copy(alpha = 0.6f)),
         contentAlignment = Alignment.BottomCenter
     ) {
-
+        modal(name, { onExit()}){
         Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.Bottom) {
-            modal(name) {
-                onExit()
-            }
 
-            Column(modifier = Modifier.fillMaxWidth().background(Color.White).padding(horizontal = 20.dp)) {
-                SpacerH(20)
-                Text("Описание", style = Typography().Headline_Medium, color = Placeholders)
-                SpacerH(8)
-
-                Text(
-                    description,
-
-                    )
-                SpacerH(49)
+                Column(modifier = Modifier.fillMaxWidth().background(Color.White).padding(horizontal = 20.dp)) {
+                    Text("Описание", style = Typography().Headline_Medium, color = Placeholders)
+                    SpacerH(8)
+                    Text(
+                        description,
+                        ) }
+                    SpacerH(40)
             }
         }
     }
