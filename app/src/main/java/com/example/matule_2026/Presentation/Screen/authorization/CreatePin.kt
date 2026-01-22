@@ -30,21 +30,18 @@ fun CreatePin(navController: NavController){
 
     var pinCode by remember { mutableStateOf(listOf<Int>()) }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize(),  horizontalAlignment = Alignment.CenterHorizontally) {
 
         SpacerH(144)
-
-        Column (modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                "Создайте пароль",
-                style = Typography().Title1_ExtraBold, color = Black
-            )
-            SpacerH(16)
-            Text(
-                "Для защиты ваших персональных данных",
-                style = Typography().Text_Regular, color = Placeholders
-            )
-        }
+        Text(
+            "Создайте пароль",
+            style = Typography().Title1_ExtraBold, color = Black
+        )
+        SpacerH(16)
+        Text(
+            "Для защиты ваших персональных данных",
+            style = Typography().Text_Regular, color = Placeholders
+        )
 
         Box(modifier = Modifier.fillMaxSize().padding(bottom = 80.dp),
             contentAlignment = Alignment.BottomCenter) {
@@ -62,17 +59,4 @@ fun CreatePin(navController: NavController){
         UserRepository.pinCode = pinCode.joinToString("")
         navController.navigate(NavigationRoutes.MAIN)
     }
-
 }
-
-
-//@Preview
-//@Composable
-//fun PreviewCreatePin(){
-//
-//    Box(modifier = Modifier.fillMaxSize().background(Color.White)) {
-//
-//        CreatePin()
-//    }
-//
-//}

@@ -29,8 +29,6 @@ import com.example.uikit.modal.snackBar
 fun LoginByPin(navController: NavController){
 
     var pinArray by remember { mutableStateOf(mutableListOf<Int>()) }
-
-
     var error by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -44,9 +42,7 @@ fun LoginByPin(navController: NavController){
                     "Вход", style = Typography().Title1_ExtraBold,
                     color = Black, textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
-
                     )
-
             }
         }
 
@@ -58,7 +54,6 @@ fun LoginByPin(navController: NavController){
                 pinArray = currentPin.toMutableList()
             }
         }
-
         if (UserRepository.validatePinCode(pinArray.joinToString(""))){
             navController.navigate(NavigationRoutes.MAIN)
             pinArray.clear()
@@ -73,6 +68,8 @@ fun LoginByPin(navController: NavController){
     }
     if (error) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        snackBar(if (error)"Введен не верный пинкод" else{"верный"}) { error = false }
+        snackBar({error = false}) {
+            Text(text = if (error)"Введен не верный пинкод" else{"верный"})
+            }
     }}
 }

@@ -33,7 +33,6 @@ fun ProductDetails(description: String, name: String,onExit: () -> Unit, stateBu
                     Column(modifier = Modifier.background(Color.White).padding(horizontal = 20.dp)) {
                         Text("Описание", style = Typography().Headline_Medium, color = Placeholders)
                         SpacerH(8)
-
                         Text(
                             description,
                             )

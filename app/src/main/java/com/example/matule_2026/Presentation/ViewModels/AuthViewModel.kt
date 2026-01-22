@@ -159,7 +159,6 @@ class AuthViewModel(private val UseCase: UseCase): ViewModel() {
                     id_logout
                 )) {
                     is NetworkResult.Success -> {
-
                     }
                     is NetworkResult.Error -> {
                         updateState(state.copy(isLoading = false, error = response.error.message))
@@ -180,11 +179,8 @@ class AuthViewModel(private val UseCase: UseCase): ViewModel() {
             } catch (e: Exception) {
                 Log.e("logout ViewModel", e.message.toString())
             }
-
-
         }
     }
-
 
     fun downloadPdf(context: Context, pdfUrl: String, fileName: String = "document.pdf") {
         try {
@@ -194,10 +190,8 @@ class AuthViewModel(private val UseCase: UseCase): ViewModel() {
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                 .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
                 .setAllowedOverMetered(true)
-
             val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
             downloadManager.enqueue(request)
-
             Toast.makeText(context, "Скачивание началось", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Toast.makeText(context, "Ошибка: ${e.message}", Toast.LENGTH_SHORT).show()

@@ -48,15 +48,12 @@ fun Projects(navController: NavHostController, viewModel: MainViewModel){
     else if (category == "Профиль"){
         navController.navigate(NavigationRoutes.PROFILE)
     }
-
-
     LaunchedEffect(Unit) {
         viewModel.getProject()
     }
 
     var stateOpen by remember { mutableStateOf(false) }
-    var index by remember {   mutableStateOf(-1)}
-
+    var index by remember {mutableStateOf(-1)}
     val listProject = viewModel.state.listProject
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -77,7 +74,6 @@ fun Projects(navController: NavHostController, viewModel: MainViewModel){
                 },
                 tint = Placeholders
             )
-
         }
         LazyColumn(modifier = Modifier.padding(horizontal = 20.dp),
 
@@ -86,15 +82,13 @@ fun Projects(navController: NavHostController, viewModel: MainViewModel){
             item {
                 SpacerH(18)
             }
-
             items(listProject.size){
-
             projectCard(listProject[it].title, listProject[it].created) {
                 index = it
                 stateOpen = true
             }
             SpacerH(16)
-        }
+            }
             item {
                 SpacerH(72)
             }
@@ -105,10 +99,8 @@ fun Projects(navController: NavHostController, viewModel: MainViewModel){
             listProject[index].title) {
             stateOpen = false
         }
-
     }
     else {
-
         Box(modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.BottomCenter) {
 

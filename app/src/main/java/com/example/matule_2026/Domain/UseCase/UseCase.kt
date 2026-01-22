@@ -21,12 +21,10 @@ import com.example.networklibrary.domain.model.User
 import com.example.networklibrary.domain.model.UsersAuth
 import com.example.networklibrary.domain.repository.PBRepository
 
-
 class UseCase(private val Repository: PBRepository) {
     suspend operator fun invoke(email: String, password: String): NetworkResult<ResponseAuth> {
         return Repository.authorizationUser(RequestAuth(email, password))
     }
-
     suspend operator fun invoke(
         email: String,
         password: String,
@@ -50,62 +48,48 @@ class UseCase(private val Repository: PBRepository) {
             )
         )
     }
-
-
     suspend fun getUser(id_user: String):NetworkResult<User>{
         return Repository.viewUser(id_user)
     }
    suspend fun GetNews():NetworkResult<ResponsesNews>{
        return Repository.promoAndNews()
    }
-
     suspend fun CreateOrders(request: RequestOrder):NetworkResult<ResponseOrder>{
         return Repository.createOrder(request)
     }
-
     suspend fun CreateProject(request: RequestProject):NetworkResult<Project>{
         return Repository.createProject(request)
     }
-
     suspend fun AddCart(request: RequestCart):NetworkResult<ResponseCart>{
         return Repository.createBucket(request)
     }
-
     suspend fun viewCart(filter: String?):NetworkResult<ResponsesCart>{
         return Repository.listBucket(filter)
     }
-
     suspend fun deleteCart(id: String):NetworkResult<Unit>{
         return Repository.deleteBucket(id)
     }
-
     suspend fun getProduct(filter: String?):NetworkResult<ResponseProducts>{
         return Repository.listProduct(filter)
     }
-
     suspend fun getProject(filter: String?):NetworkResult<ResponsesProject>{
         return Repository.listProject(filter)
     }
-
     suspend fun getOrders(filter: String?):NetworkResult<ResponsesOrders>{
         return Repository.listOrders(filter)
     }
-
     suspend fun getProfile(id:String):NetworkResult<User>{
         return Repository.viewUser(id)
     }
-
     suspend fun returnIdToken(token: String):NetworkResult<UsersAuth>{
         return Repository.returnIdToken(token)
     }
     suspend fun logout(token: String, id_token:String):NetworkResult<Unit>{
         return Repository.logout(token,id_token)
     }
-
     suspend fun changeCart(id_bucket: String, request: RequestCart):NetworkResult<ResponseCart>{
         return Repository.redactBucket(id_bucket, request)
     }
-
     suspend fun createProjectWithImage(
         title: String,
         typeProject: String,
@@ -133,5 +117,4 @@ class UseCase(private val Repository: PBRepository) {
             )
         )
     }
-
 }

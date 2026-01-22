@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,17 +26,12 @@ import com.example.uikit.modal.snackBar
 fun CreatePassword(navController: NavHostController, viewModel: AuthViewModel){
 
     var stateButton by remember { mutableStateOf(true) }
-
     val state = viewModel.state
 
     Column(modifier = Modifier.fillMaxSize()
         .padding(top = 103.dp, bottom = 322.dp, start = 20.dp, end = 20.dp),
         Arrangement.SpaceBetween) {
-
         authorizationTitle("Создание пароля", "Введите новый пароль")
-
-
-        Column() {
 
             inputAndTitle("Новый Пароль", state.password,true,
                 false,"") {
@@ -50,14 +46,11 @@ fun CreatePassword(navController: NavHostController, viewModel: AuthViewModel){
             bigButton("Сохранить", stateButton) {
                     viewModel.Registration(navController)
             }
-        }
     }
     if (!state.error.isNullOrEmpty()){
-
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-
-            snackBar("Ошибка \n${state.error}") {
-                viewModel.updateState(state.copy(error = null))
+            snackBar({viewModel.updateState(state.copy(error = null))}) {
+                Text("Ошибка \n${state.error}", )
             }
         }
     }

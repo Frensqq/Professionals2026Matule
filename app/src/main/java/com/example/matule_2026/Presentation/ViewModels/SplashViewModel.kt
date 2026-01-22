@@ -9,14 +9,12 @@ import com.example.matule_2026.Presentation.navigate.NavigationRoutes
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
 class SplashViewModel(): ViewModel() {
 
     fun launch(controller: NavHostController){
         viewModelScope.launch {
             delay(2000)
             Log.e("UserRepository.act Splash", UserRepository.act.toString())
-            //Не авторизован
             if (UserRepository.act==0){
                 controller.navigate(NavigationRoutes.SIGNINPASS){
                     popUpTo(NavigationRoutes.SPLASH){
@@ -24,8 +22,6 @@ class SplashViewModel(): ViewModel() {
                     }
                 }
             }
-
-            //авторизован
             if (UserRepository.act==1){
                 controller.navigate(NavigationRoutes.SIGNINPIN){
                     popUpTo(NavigationRoutes.SIGNINPASS){

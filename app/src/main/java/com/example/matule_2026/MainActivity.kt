@@ -70,8 +70,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
-
-
         setContent {
             val isOnline by _isOnline.collectAsState()
 
@@ -109,8 +107,6 @@ class MainActivity : ComponentActivity() {
             this, 0, intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-
-
 
         val triggerTime = SystemClock.elapsedRealtime() + 60000/3
 

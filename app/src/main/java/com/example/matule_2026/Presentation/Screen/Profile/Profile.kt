@@ -61,7 +61,6 @@ fun Profile(navController: NavHostController,viewModel: AuthViewModel){
         viewModel.returnIdToken()
         viewModel.getProfile()
     }
-
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
@@ -109,7 +108,6 @@ fun Profile(navController: NavHostController,viewModel: AuthViewModel){
                     UserRepository.notification = stateToggle
                 }
             }
-
         }
 
         SpacerH(176)
@@ -167,15 +165,11 @@ fun searchId(UserAuth: List<UserAuth>): String{
 
     val user_id = UserRepository.UserID
 
-
         UserAuth.forEach { elements ->
-
-
             if (elements.recordRef == user_id) {
                 return elements.id
             }
         }
-
 
     return ""
 }

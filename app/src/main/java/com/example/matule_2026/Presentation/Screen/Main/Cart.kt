@@ -117,7 +117,7 @@ fun Cart(navController: NavHostController,viewModel: MainViewModel){
         contentAlignment = Alignment.BottomCenter) {
 
         if (StateButton) {
-            snackBar( "Заказ создан",{StateButton = !StateButton})
+            snackBar( { StateButton = !StateButton},{Text(text = "Заказ создан")})
         }
 
         bigButton("Перейти к оформлению заказа", true) {

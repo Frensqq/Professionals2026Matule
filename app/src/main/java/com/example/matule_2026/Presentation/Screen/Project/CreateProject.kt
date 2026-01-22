@@ -82,7 +82,6 @@ fun CreateProject(navController: NavController, viewModel: MainViewModel){
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         item {
-
             SpacerH(72)
 
             Row(modifier = Modifier.fillMaxWidth().height(48.dp),
@@ -91,14 +90,12 @@ fun CreateProject(navController: NavController, viewModel: MainViewModel){
                 Text("Создать проект", style = Typography().Title2_SemiBold, color = Black)
 
             }
-
             SpacerH(13)
 
             selectAndText("Тип", state.type,"Выберите  тип",listTYPE,
                 {
                     viewModel.updateState(state.copy(type = it))
                 } )
-
             SpacerH(16)
 
             inputAndTitle("Название проекта", state.name,false,false,
@@ -185,9 +182,7 @@ fun CreateProject(navController: NavController, viewModel: MainViewModel){
                     viewModel.createProject(navController)
                 }
             }
-
             SpacerH(103)
-
         }
     }
 
@@ -205,7 +200,6 @@ fun CreateProject(navController: NavController, viewModel: MainViewModel){
 fun selectAndText(titleText:String,value: String,text: String, selectOptions: List<String>,onSelect: (String) -> Unit){
 
     Column() {
-
         Text(titleText, style = Typography().Caption_Regular,
             color = Description)
         SpacerH(8)
@@ -213,5 +207,4 @@ fun selectAndText(titleText:String,value: String,text: String, selectOptions: Li
             onSelect(currentSelect)
         }
     }
-
 }

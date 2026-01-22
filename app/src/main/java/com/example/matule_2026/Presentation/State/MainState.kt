@@ -24,9 +24,6 @@ data class MainState (
     val TabSelected:Int = 0,
     val notification: Boolean = false,
 
-
-    //createProject
-
     var type: String = "",
     var name: String = "",
     var dateEnd: String = "",

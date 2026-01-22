@@ -27,7 +27,6 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
         _state.value = newstate
     }
 
-
     fun getImage(collectionId:String, id: String, image:String): String {
         val imageUrl = PBApiServis.getImageUrl(collectionId,id,image)
         return imageUrl
@@ -241,7 +240,6 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
                     is NetworkResult.Error -> {
                         Log.i("Ошибка просмотра в корзину", result.error.message.toString())
                     }
-
                     is NetworkResult.Success -> {
                         Log.d("Просмотр корзины", result.data.items.toString())
 
@@ -263,10 +261,8 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
                     is NetworkResult.Error -> {
                         Log.i("Ошибка удаления в корзину", result.error.message.toString())
                     }
-
                     is NetworkResult.Success -> {
                         Log.d("Удаление в корзину", "Success")
-
                         updateState(state.copy(Cart =  null ))
                         Log.e("Удаление в корзину state", state.listProduct.toString())
                     }
@@ -306,11 +302,8 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
                     is NetworkResult.Success -> {
                         Log.d("Создание проекта с изображением", result.data.id)
                         updateState(state.copy(project = result.data ?: null))
-
-                        // Сбросить изображение после успешной загрузки
                         selectedImageUri = null
                         selectedImageName = ""
-
                         navController.navigate(NavigationRoutes.PROJECTS)
                     }
                     is NetworkResult.NoInternet -> {}
@@ -321,7 +314,6 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
         }
     }
 
-    // Метод для выбора изображения
     fun selectImage(uri: android.net.Uri, context: android.content.Context) {
         selectedImageUri = uri
         selectedImageName = getFileNameFromUri(context, uri)

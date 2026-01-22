@@ -21,7 +21,6 @@ import com.example.uikit.UI.White
 fun Splash(Navcontroller: NavHostController,viewModel: SplashViewModel = viewModel()){
 
     viewModel.launch(Navcontroller)
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -45,14 +44,4 @@ fun Splash(Navcontroller: NavHostController,viewModel: SplashViewModel = viewMod
             color = White
         )
     }
-
-
 }
-
-//@Preview
-//@Composable
-//fun PreviewSplash(){
-//
-//    Splash()
-//
-//}

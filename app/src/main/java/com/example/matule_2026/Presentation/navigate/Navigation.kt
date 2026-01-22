@@ -26,7 +26,6 @@ import org.koin.androidx.compose.koinViewModel
 fun Navigation(isOnline: Boolean) {
 
     val navController = rememberNavController()
-
     val AuthViewModel: AuthViewModel  = koinViewModel()
     val MainViewModel: MainViewModel = koinViewModel()
 

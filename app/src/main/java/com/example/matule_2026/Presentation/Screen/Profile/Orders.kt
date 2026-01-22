@@ -50,13 +50,9 @@ fun Orders(viewModel: MainViewModel, navController: NavController){
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
 
             buttonBack { navController.navigate(NavigationRoutes.PROFILE) }
-
             Text("Заказы")
-
             SpacerW(30)
-
         }
-
 
         LazyColumn( )
         {
@@ -64,16 +60,11 @@ fun Orders(viewModel: MainViewModel, navController: NavController){
                 SpacerH(32)
             }
             items(listOrder.size){
-
             val indexCart = (state.listProduct.mapNotNull { it.id }).indexOf(listOrder[it].product_id)
-            var stateBut = indexCart!=-1
-
-
+            val stateBut = indexCart!=-1
             if (stateBut) {
 
-
                     backgroundCards{
-
                     Column(
                         modifier = Modifier.fillMaxWidth().height(138.dp),
                         verticalArrangement = Arrangement.SpaceBetween
@@ -120,11 +111,8 @@ fun Orders(viewModel: MainViewModel, navController: NavController){
                                     style = Typography().Text_Regular,
                                     color = Black
                                 )
-
                             }
-
                         }
-
                     }
                 }
             }

@@ -17,7 +17,6 @@ import org.koin.dsl.module
 val networkModule = module {
 
     single<NetworkMonitor> { AndroidNetworkMonitor(androidContext()) }
-
     single<PBApi> { PBApiServis.instance }
 
     single<PBRepository> {

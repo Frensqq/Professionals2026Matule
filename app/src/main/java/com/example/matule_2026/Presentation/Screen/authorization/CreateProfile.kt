@@ -32,31 +32,22 @@ fun CreateProfile(navController: NavHostController, viewModel:AuthViewModel){
         Log.d("44",state.dateBirthday)
     }
 
-    var list = listOf<String>("Web", "Mobile","Desktop")
-
-    var isNotNull = if(state.name!= "" && state.surname!= ""&& state.lastname!= ""&& state.gender!= ""&& state.dateBirthday!= "") true else false
+    val list = listOf<String>("Web", "Mobile","Desktop")
+    val isNotNull = if(state.name!= "" && state.surname!= ""&& state.lastname!= ""&& state.gender!= ""&& state.dateBirthday!= "") true else false
 
     Column(modifier = Modifier.fillMaxSize()
         .padding(horizontal = 20.dp)) {
-
         SpacerH(76)
-
         Text("Создание Профиля", style = Typography().Title1_ExtraBold, color = Black)
-
         SpacerH(44)
-
         Text("Без профиля вы не сможете создавать проекты.",
             style =  Typography().Caption_Regular, color = Placeholders
         )
-
         SpacerH(8)
-
         Text("В профиле будут храниться результаты проектов и ваши описания.",
             style =  Typography().Caption_Regular, color = Placeholders
         )
-
         SpacerH(32)
-
         textInputField(state.name,false,false,"Имя") {
             viewModel.updateState(state.copy(name = it))
         }
@@ -72,34 +63,26 @@ fun CreateProfile(navController: NavHostController, viewModel:AuthViewModel){
         DateInput("Дата рождения",state.dateBirthday,{
             viewModel.updateState(state.copy(dateBirthday = it))
         })
-
         SpacerH(24)
-
         Select(state.gender,"Пол", list) {
             viewModel.updateState(state.copy(gender = it))
         }
-
         SpacerH(24)
         textInputField(state.email,false,false,"Почта") {
             viewModel.updateState(state.copy(email = it))
         }
-
-
         Box(modifier = Modifier.fillMaxSize().padding(bottom = 32.dp),
             contentAlignment = Alignment.BottomCenter) {
-
             bigButton("Далее",isNotNull) {
                 navController.navigate(NavigationRoutes.CREATEPASS)
             }
         }
     }
     if (!state.error.isNullOrEmpty()){
-
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 
-            snackBar("Ошибка \n${state.error}") {
-                viewModel.updateState(state.copy(error = null))
-            }
+            snackBar({viewModel.updateState(state.copy(error = null))}
+            ) {Text("Ошибка \n${state.error}") }
         }
     }
 }

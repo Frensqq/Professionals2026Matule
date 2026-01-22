@@ -8,7 +8,6 @@ import androidx.core.app.NotificationCompat
 import com.example.uikit.R
 
 const val CHANNEL_ID = "NotificationAfterMinute"
-
 object NotificationService {
     fun createNotificationChannel(context: Context) {
         val name = "NotificationChannel"
@@ -18,7 +17,6 @@ object NotificationService {
             context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
     }
-
     fun createNotification(context: Context): NotificationCompat.Builder {
         val builder: NotificationCompat.Builder =
             NotificationCompat.Builder(context, CHANNEL_ID)

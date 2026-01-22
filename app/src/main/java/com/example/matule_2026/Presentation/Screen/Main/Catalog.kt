@@ -38,7 +38,6 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
         viewModel.getProduct()
         viewModel.viewCart()
     }
-
     val listProduct = state.listProduct
 
     var category by remember { mutableStateOf("Каталог") }
@@ -148,12 +147,10 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
                     .fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
-
                 cartButton(totalCost, {
                     navController.navigate(NavigationRoutes.CART)
 
                 })
-
             }
             TabBar(category,
                 { currentCategory ->

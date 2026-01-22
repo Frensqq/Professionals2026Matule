@@ -26,7 +26,6 @@ import com.example.uikit.modal.snackBar
 fun LoginInPass(navController: NavHostController, viewModel: AuthViewModel){
 
     val state = viewModel.state
-
     var isNotNull = if(state.email!="" && state.password!= "") true else false
 
     Column(modifier = Modifier.padding(horizontal = 20.dp),
@@ -61,19 +60,15 @@ fun LoginInPass(navController: NavHostController, viewModel: AuthViewModel){
                 }
             })
 
-
         Box(modifier = Modifier.fillMaxSize().padding(bottom = 56.dp), contentAlignment = Alignment.BottomCenter) {
             LogIn({}, {})
         }
 
-
     }
     if (!state.error.isNullOrEmpty()){
-
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-
-            snackBar("Ошибка \n${state.error}") {
-                viewModel.updateState(state.copy(error = null))
+            snackBar({viewModel.updateState(state.copy(error = null))}) {
+                Text(text = "Ошибка \n${state.error}")
             }
         }
     }
