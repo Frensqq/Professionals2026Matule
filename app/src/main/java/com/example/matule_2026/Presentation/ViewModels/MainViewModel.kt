@@ -279,7 +279,7 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
 
     fun createProjectWithImage(
         navController: NavController,
-        context: android.content.Context  // Добавить контекст
+        context: android.content.Context
     ) {
         viewModelScope.launch {
             try {

@@ -1,18 +1,22 @@
 package com.example.matule_2026.Presentation.notification
 
-import android.Manifest
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import androidx.annotation.RequiresPermission
+import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.example.uikit.R
 
-class AlarmBroadcastReceiver : BroadcastReceiver() {
-    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
+class NotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         context?.let {
-            val builder = NotificationService.createNotification(it)
-            NotificationManagerCompat.from(it).notify(123, builder.build())
+            NotificationCompat.Builder(it, "reminder")
+                .setSmallIcon(R.drawable.home)
+                .setContentTitle("Возвращайтесь скорее!")
+                .build()
+                .also { notification ->
+                    NotificationManagerCompat.from(it).notify(1, notification)
+                }
         }
     }
 }

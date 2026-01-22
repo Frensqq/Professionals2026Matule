@@ -38,7 +38,7 @@
         </activity>
 
         <receiver
-            android:name=".Presentation.notification.AlarmBroadcastReceiver"
+            android:name=".Presentation.notification.NotificationReceiver"
             android:exported="false" />
         <provider
             android:name="androidx.core.content.FileProvider"
