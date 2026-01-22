@@ -52,8 +52,7 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
     }
     var searchString by remember { mutableStateOf("") }
 
-    val ListCateg: List<String> = listOf("Все","Популярные","Женщинам","Мужчинам","Детям","Аксессуары")
-    var currentCategory by remember { mutableStateOf(ListCateg[0]) }
+    var currentCategory by remember { mutableStateOf(state.listCateg[0]) }
 
     var stateOpen by remember { mutableStateOf(false) }
     var index by remember {   mutableStateOf(-1)}
@@ -74,7 +73,7 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
 
         SpacerH(32)
 
-        categoryMenu(ListCateg, currentCategory,
+        categoryMenu(state.listCateg, currentCategory,
             onClickString = { currCateg ->
                 currentCategory = currCateg
                 viewModel.getProduct(if(currCateg=="Все") null else "type = '$currCateg'")

@@ -32,7 +32,6 @@ fun CreateProfile(navController: NavHostController, viewModel:AuthViewModel){
         Log.d("44",state.dateBirthday)
     }
 
-    val list = listOf<String>("Web", "Mobile","Desktop")
     val isNotNull = if(state.name!= "" && state.surname!= ""&& state.lastname!= ""&& state.gender!= ""&& state.dateBirthday!= "") true else false
 
     Column(modifier = Modifier.fillMaxSize()
@@ -64,7 +63,7 @@ fun CreateProfile(navController: NavHostController, viewModel:AuthViewModel){
             viewModel.updateState(state.copy(dateBirthday = it))
         })
         SpacerH(24)
-        Select(state.gender,"Пол", list) {
+        Select(state.gender,"Пол", state.genderList) {
             viewModel.updateState(state.copy(gender = it))
         }
         SpacerH(24)

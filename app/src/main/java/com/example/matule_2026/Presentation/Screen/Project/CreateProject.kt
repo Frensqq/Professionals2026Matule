@@ -66,10 +66,6 @@ fun CreateProject(navController: NavController, viewModel: MainViewModel){
         navController.navigate(NavigationRoutes.PROFILE)
     }
 
-    var listTYPE = listOf<String>("Web", "Mobile","Desktop")
-    var list = listOf<String>("Web", "Mobile","Desktop")
-    var genderList = listOf<String>("Мужской", "Женский","Другое")
-
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
@@ -92,7 +88,7 @@ fun CreateProject(navController: NavController, viewModel: MainViewModel){
             }
             SpacerH(13)
 
-            selectAndText("Тип", state.type,"Выберите  тип",listTYPE,
+            selectAndText("Тип", state.type,"Выберите  тип",state.listType,
                 {
                     viewModel.updateState(state.copy(type = it))
                 } )
@@ -118,7 +114,7 @@ fun CreateProject(navController: NavController, viewModel: MainViewModel){
 
             SpacerH(10)
 
-            Select(state.gender, "Пол",genderList) {
+            Select(state.gender, "Пол",state.genderList) {
                 viewModel.updateState(state.copy(gender = it))
             }
 
@@ -132,7 +128,7 @@ fun CreateProject(navController: NavController, viewModel: MainViewModel){
             SpacerH(17)
 
             selectAndText("Категория", state.category,
-                "Выберите  категорию",list,{
+                "Выберите  категорию",state.listType,{
                     viewModel.updateState(state.copy(category = it))
                 } )
 

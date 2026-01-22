@@ -15,6 +15,11 @@ data class MainState (
     val project: Project? = null,
     var product: ProductItem? = null,
 
+    val genderList: List<String> = listOf("Мужской", "Женский","Другое"),
+    var listType: List<String> = listOf("Web", "Mobile","Desktop"),
+    val listCateg: List<String> = listOf("Все","Популярные","Женщинам","Мужчинам","Детям","Аксессуары"),
+
+
     val listOrders: List<ResponseOrder> = emptyList(),
     val Order: ResponseOrder? = null,
 

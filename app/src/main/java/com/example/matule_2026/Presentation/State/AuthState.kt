@@ -11,6 +11,7 @@ data class AuthState (
 
     val UserAuth: List<UserAuth> = emptyList(),
     val CurrentUser: User? = null,
+    val genderList: List<String> = listOf("Мужской", "Женский","Другое"),
 
     var name:String ="",
     var surname:String ="",
