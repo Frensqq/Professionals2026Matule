@@ -59,7 +59,7 @@ fun CreateProfile(navController: NavHostController, viewModel:AuthViewModel){
             viewModel.updateState(state.copy(surname = it))
         }
         SpacerH(24)
-        DateInput("Дата рождения",state.dateBirthday,{
+        DateInput(state.dateBirthday,"Дата рождения",{
             viewModel.updateState(state.copy(dateBirthday = it))
         })
         SpacerH(24)

@@ -50,7 +50,7 @@ fun CreatePassword(navController: NavHostController, viewModel: AuthViewModel){
     if (!state.error.isNullOrEmpty()){
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             snackBar({viewModel.updateState(state.copy(error = null))}) {
-                Text("Ошибка \n${state.error}", )
+                Text("Ошибка \n${state.error}")
             }
         }
     }

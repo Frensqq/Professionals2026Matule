@@ -55,8 +55,8 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
     var currentCategory by remember { mutableStateOf(state.listCateg[0]) }
 
     var stateOpen by remember { mutableStateOf(false) }
-    var index by remember {   mutableStateOf(-1)}
-    var indexList by remember {   mutableStateOf(-1)}
+    var index by remember {mutableStateOf(-1)}
+    var indexList by remember {mutableStateOf(-1)}
 
     val totalCost = remember(listProduct, state.listCart) {
         calculateTotalCost(listProduct,state.listCart)
@@ -160,7 +160,6 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
     }
 }
 
-
  fun calculateTotalCost(listProduct: List<ProductItem>, listCart: List<ResponseCart>): Int {
     var total = 0
 
@@ -169,6 +168,5 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
             total += product.price * cartItem.count
         }
     }
-
     return total
 }
