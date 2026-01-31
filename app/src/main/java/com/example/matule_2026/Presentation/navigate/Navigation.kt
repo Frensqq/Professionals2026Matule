@@ -31,44 +31,46 @@ fun Navigation(isOnline: Boolean) {
 
     NavHost(navController = navController, startDestination = NavigationRoutes.SPLASH) {
 
-        composable(NavigationRoutes.SPLASH){
-            Splash(navController)
-        }
-        composable(NavigationRoutes.CART){
-            Cart(navController, MainViewModel)
-        }
-        composable(NavigationRoutes.CATALOG){
-            Catalog(navController, MainViewModel)
-        }
-        composable(NavigationRoutes.CREATEPASS){
-            CreatePassword(navController, AuthViewModel)
-        }
-        composable(NavigationRoutes.CREATEPIN){
-            CreatePin(navController)
-        }
-        composable(NavigationRoutes.CREATEPROFILE){
-            CreateProfile(navController, AuthViewModel)
-        }
-        composable(NavigationRoutes.CREATEPROJECTS){
-            CreateProject(navController, MainViewModel)
-        }
-        composable(NavigationRoutes.MAIN){
-            MainScreen(navController,MainViewModel)
-        }
-        composable(NavigationRoutes.PROFILE){
-            Profile(navController, AuthViewModel)
-        }
-        composable(NavigationRoutes.PROJECTS){
-            Projects(navController, MainViewModel)
-        }
-        composable(NavigationRoutes.SIGNINPASS){
-            LoginInPass(navController, AuthViewModel)
-        }
-        composable(NavigationRoutes.SIGNINPIN){
-            LoginByPin(navController)
-        }
-        composable(NavigationRoutes.ORDERS){
-            Orders(MainViewModel, navController)
+        if (isOnline) {
+            composable(NavigationRoutes.SPLASH) {
+                Splash(navController)
+            }
+            composable(NavigationRoutes.CART) {
+                Cart(navController, MainViewModel)
+            }
+            composable(NavigationRoutes.CATALOG) {
+                Catalog(navController, MainViewModel)
+            }
+            composable(NavigationRoutes.CREATEPASS) {
+                CreatePassword(navController, AuthViewModel)
+            }
+            composable(NavigationRoutes.CREATEPIN) {
+                CreatePin(navController)
+            }
+            composable(NavigationRoutes.CREATEPROFILE) {
+                CreateProfile(navController, AuthViewModel)
+            }
+            composable(NavigationRoutes.CREATEPROJECTS) {
+                CreateProject(navController, MainViewModel)
+            }
+            composable(NavigationRoutes.MAIN) {
+                MainScreen(navController, MainViewModel)
+            }
+            composable(NavigationRoutes.PROFILE) {
+                Profile(navController, AuthViewModel)
+            }
+            composable(NavigationRoutes.PROJECTS) {
+                Projects(navController, MainViewModel)
+            }
+            composable(NavigationRoutes.SIGNINPASS) {
+                LoginInPass(navController, AuthViewModel)
+            }
+            composable(NavigationRoutes.SIGNINPIN) {
+                LoginByPin(navController)
+            }
+            composable(NavigationRoutes.ORDERS) {
+                Orders(MainViewModel, navController)
+            }
         }
     }
 }

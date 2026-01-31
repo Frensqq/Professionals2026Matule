@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.matule_2026.Presentation.Screen.Main.NavigateBottomBar
 import com.example.matule_2026.Presentation.ViewModels.MainViewModel
 import com.example.matule_2026.Presentation.navigate.NavigationRoutes
 import com.example.matule_2026.R
@@ -54,16 +56,13 @@ fun CreateProject(navController: NavController, viewModel: MainViewModel){
     var state = viewModel.state
     val context = LocalContext.current
 
-    var category by remember { mutableStateOf("Проекты") }
+    var MainCategory by remember { mutableStateOf("Проекты") }
+    var category by remember { mutableStateOf(MainCategory) }
 
-    if (category == "Главная"){
-        navController.navigate(NavigationRoutes.MAIN)
-    }
-    else if (category == "Каталог"){
-        navController.navigate(NavigationRoutes.CATALOG)
-    }
-    else if (category == "Профиль"){
-        navController.navigate(NavigationRoutes.PROFILE)
+    LaunchedEffect(category) {
+        if (category!=MainCategory){
+            category = NavigateBottomBar(category,navController)
+        }
     }
 
     val galleryLauncher = rememberLauncherForActivityResult(

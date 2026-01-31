@@ -25,11 +25,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
-import com.example.matule_2026.Domain.Repository.UserRepository
 import com.example.matule_2026.Presentation.ViewModels.MainViewModel
 import com.example.matule_2026.Presentation.navigate.NavigationRoutes
 import com.example.uikit.UI.Accent
@@ -45,16 +45,9 @@ import com.example.uikit.search.searchField
 @Composable
 fun MainScreen(navController: NavHostController,viewModel: MainViewModel){
 
-    var category by remember { mutableStateOf("Главная") }
-    if (category == "Профиль"){
-        navController.navigate(NavigationRoutes.PROFILE)
-    }
-    else if (category == "Каталог"){
-        navController.navigate(NavigationRoutes.CATALOG)
-    }
-    else if (category == "Проекты"){
-        navController.navigate(NavigationRoutes.PROJECTS)
-    }
+    var MainCategory by remember { mutableStateOf("Главная") }
+    var category by remember { mutableStateOf(MainCategory) }
+
     var searchString by remember { mutableStateOf("") }
 
     val state = viewModel.state
@@ -63,6 +56,11 @@ fun MainScreen(navController: NavHostController,viewModel: MainViewModel){
         viewModel.getNews()
         viewModel.getProduct()
         viewModel.viewCart()
+    }
+    LaunchedEffect(category) {
+        if (category!=MainCategory){
+            category = NavigateBottomBar(category,navController)
+        }
     }
 
     val listNews = state.listNews
@@ -205,4 +203,20 @@ fun MainScreen(navController: NavHostController,viewModel: MainViewModel){
             )
         }
     }
+}
+
+fun NavigateBottomBar(category: String, navController: NavController): String{
+    if (category == "Профиль"){
+        navController.navigate(NavigationRoutes.PROFILE)
+    }
+    else if (category == "Каталог"){
+        navController.navigate(NavigationRoutes.CATALOG)
+    }
+    else if (category == "Проекты"){
+        navController.navigate(NavigationRoutes.PROJECTS)
+    }
+    else if(category == "Главная"){
+        navController.navigate(NavigationRoutes.MAIN)
+    }
+    return category
 }

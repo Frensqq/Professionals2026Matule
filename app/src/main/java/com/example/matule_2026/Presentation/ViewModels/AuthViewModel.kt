@@ -52,6 +52,7 @@ class AuthViewModel(private val UseCase: UseCase): ViewModel() {
                         is NetworkResult.NoInternet -> {
                             _state.value = _state.value.copy(error = "No Internet")
                         }
+                        is NetworkResult.Loading ->{}
                     }
                     Log.d("auth", state.error.toString())
                 } else {
@@ -85,6 +86,8 @@ class AuthViewModel(private val UseCase: UseCase): ViewModel() {
                     is NetworkResult.NoInternet -> {
                         updateState(state.copy(isNotInternet = true))
                     }
+                    is NetworkResult.Loading ->{}
+
                 }
                 Log.d("Reg", state.error.toString())
             } catch (e: Exception) {
@@ -115,6 +118,8 @@ class AuthViewModel(private val UseCase: UseCase): ViewModel() {
                     is NetworkResult.NoInternet -> {
                         updateState(state.copy(isNotInternet = true))
                     }
+                    is NetworkResult.Loading ->{}
+
                 }
                 Log.d("Reg", state.error.toString())
             } catch (e: Exception) {
@@ -142,6 +147,8 @@ class AuthViewModel(private val UseCase: UseCase): ViewModel() {
                     is NetworkResult.NoInternet -> {
                         updateState(state.copy(isNotInternet = true))
                     }
+                    is NetworkResult.Loading ->{}
+
                 }
                 Log.d("returnIdToken", state.error.toString())
             } catch (e: Exception) {
@@ -166,6 +173,8 @@ class AuthViewModel(private val UseCase: UseCase): ViewModel() {
                     is NetworkResult.NoInternet -> {
                         updateState(state.copy(isNotInternet = true))
                     }
+                    is NetworkResult.Loading ->{}
+
                 }
                 Log.d("logout", state.error.toString())
                 UserRepository.act = 0

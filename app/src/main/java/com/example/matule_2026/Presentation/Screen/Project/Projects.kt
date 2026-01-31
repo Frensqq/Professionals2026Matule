@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.matule_2026.Presentation.Screen.Main.NavigateBottomBar
 import com.example.matule_2026.Presentation.ViewModels.MainViewModel
 import com.example.matule_2026.Presentation.navigate.NavigationRoutes
 import com.example.uikit.R
@@ -38,15 +39,13 @@ import com.example.uikit.components.TabBar
 @Composable
 fun Projects(navController: NavHostController, viewModel: MainViewModel){
 
-    var category by remember { mutableStateOf("Проекты") }
-    if (category == "Главная"){
-        navController.navigate(NavigationRoutes.MAIN)
-    }
-    else if (category == "Каталог"){
-        navController.navigate(NavigationRoutes.CATALOG)
-    }
-    else if (category == "Профиль"){
-        navController.navigate(NavigationRoutes.PROFILE)
+    var MainCategory by remember { mutableStateOf("Проекты") }
+    var category by remember { mutableStateOf(MainCategory) }
+
+    LaunchedEffect(category) {
+        if (category!=MainCategory){
+            category = NavigateBottomBar(category,navController)
+        }
     }
     LaunchedEffect(Unit) {
         viewModel.getProject()

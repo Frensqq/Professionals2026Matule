@@ -52,6 +52,8 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
                     is NetworkResult.NoInternet -> {
                         Log.d("Ошибка Получения акций и новостей", "Нет интернета")
                     }
+                    is NetworkResult.Loading ->{}
+
                 }
 
             } catch (e: Exception) {
@@ -75,6 +77,8 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
                         Log.e("Продукты state", state.listProduct.toString())
                     }
                     is NetworkResult.NoInternet -> {}
+                    is NetworkResult.Loading ->{}
+
                 }
             } catch (e: Exception) {
                 Log.i("Ошибка Продукты", e.message.toString())
@@ -96,6 +100,8 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
                         Log.e("Проекты вывод state", state.listProduct.toString())
                     }
                     is NetworkResult.NoInternet -> {}
+                    is NetworkResult.Loading ->{}
+
                 }
             } catch (e: Exception) {
                 Log.i("Ошибка вывод проектов", e.message.toString())
@@ -121,6 +127,8 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
                         Log.e("Создание заказа state", state.listProduct.toString())
                     }
                     is NetworkResult.NoInternet -> {}
+                    is NetworkResult.Loading ->{}
+
                 }
             } catch (e: Exception) {
                 Log.i("Ошибка Создание заказа", e.message.toString())
@@ -142,6 +150,7 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
                         Log.e("Заказы вывод state", state.listProduct.toString())
                     }
                     is NetworkResult.NoInternet -> {}
+                    is NetworkResult.Loading ->{}
                 }
             } catch (e: Exception) {
                 Log.i("Ошибка вывод заказов", e.message.toString())
@@ -175,6 +184,8 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
                         Log.e("Создание проекта state", state.listProduct.toString())
                     }
                     is NetworkResult.NoInternet -> {}
+                    is NetworkResult.Loading ->{}
+
                 }
             } catch (e: Exception) {
                 Log.i("Ошибка Создание проекта", e.message.toString())
@@ -200,6 +211,8 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
                         Log.e("Добавление в корзину state", state.listProduct.toString())
                     }
                     is NetworkResult.NoInternet -> {}
+                    is NetworkResult.Loading ->{}
+
                 }
             } catch (e: Exception) {
                 Log.i("Ошибка добавления в корзину", e.message.toString())
@@ -226,6 +239,8 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
                         Log.e("Редактирование корзины state", state.listProduct.toString())
                     }
                     is NetworkResult.NoInternet -> {}
+                    is NetworkResult.Loading ->{}
+
                 }
             } catch (e: Exception) {
                 Log.i("Ошибка редактирования корзины", e.message.toString())
@@ -247,6 +262,8 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
                         Log.e("Просмотр корзины state", state.listCart.toString())
                     }
                     is NetworkResult.NoInternet -> {}
+                    is NetworkResult.Loading ->{}
+
                 }
             } catch (e: Exception) {
                 Log.i("Ошибка просмотра корзины", e.message.toString())
@@ -267,6 +284,8 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
                         Log.e("Удаление в корзину state", state.listProduct.toString())
                     }
                     is NetworkResult.NoInternet -> {}
+                    is NetworkResult.Loading ->{}
+
                 }
             } catch (e: Exception) {
                 Log.i("Ошибка удаления в корзину", e.message.toString())
@@ -307,6 +326,8 @@ class MainViewModel(private val useCase: UseCase): ViewModel() {
                         navController.navigate(NavigationRoutes.PROJECTS)
                     }
                     is NetworkResult.NoInternet -> {}
+                    is NetworkResult.Loading ->{}
+
                 }
             } catch (e: Exception) {
                 Log.i("Ошибка Создание проекта с изображением", e.message.toString())

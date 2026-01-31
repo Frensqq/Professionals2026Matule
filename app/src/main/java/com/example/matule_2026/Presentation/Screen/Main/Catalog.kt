@@ -40,16 +40,15 @@ fun Catalog(navController: NavHostController,viewModel: MainViewModel){
     }
     val listProduct = state.listProduct
 
-    var category by remember { mutableStateOf("Каталог") }
-    if (category == "Главная"){
-        navController.navigate(NavigationRoutes.MAIN)
+    var MainCategory by remember { mutableStateOf("Каталог") }
+    var category by remember { mutableStateOf(MainCategory) }
+
+    LaunchedEffect(category) {
+        if (category!=MainCategory){
+            category = NavigateBottomBar(category,navController)
+        }
     }
-    else if (category == "Проекты"){
-        navController.navigate(NavigationRoutes.PROJECTS)
-    }
-    else if (category == "Профиль"){
-        navController.navigate(NavigationRoutes.PROFILE)
-    }
+
     var searchString by remember { mutableStateOf("") }
 
     var currentCategory by remember { mutableStateOf(state.listCateg[0]) }

@@ -1,6 +1,5 @@
 package com.example.matule_2026.Presentation.State
 
-import com.example.networklibrary.domain.model.ApiError
 import com.example.networklibrary.domain.model.User
 import com.example.networklibrary.domain.model.UserAuth
 
@@ -22,5 +21,8 @@ data class AuthState (
     var isLoading:Boolean = false,
     var isSuccess:Boolean =false,
     var error: String?=null,
-    var isNotInternet:Boolean = false
+    var isNotInternet:Boolean = false,
+
+
+
 )

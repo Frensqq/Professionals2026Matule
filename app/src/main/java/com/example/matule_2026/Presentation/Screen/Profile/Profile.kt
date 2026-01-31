@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.matule_2026.Domain.Repository.UserRepository
+import com.example.matule_2026.Presentation.Screen.Main.NavigateBottomBar
 import com.example.matule_2026.Presentation.ViewModels.AuthViewModel
 import com.example.matule_2026.Presentation.navigate.NavigationRoutes
 import com.example.matule_2026.R
@@ -44,15 +45,13 @@ import com.example.uikit.controls.toggle
 fun Profile(navController: NavHostController,viewModel: AuthViewModel){
 
     val state = viewModel.state
-    var category by remember { mutableStateOf("Профиль") }
-    if (category == "Главная"){
-        navController.navigate(NavigationRoutes.MAIN)
-    }
-    else if (category == "Каталог"){
-        navController.navigate(NavigationRoutes.CATALOG)
-    }
-    else if (category == "Проекты"){
-        navController.navigate(NavigationRoutes.PROJECTS)
+    var MainCategory by remember { mutableStateOf("Профиль") }
+    var category by remember { mutableStateOf(MainCategory) }
+
+    LaunchedEffect(category) {
+        if (category!=MainCategory){
+            category = NavigateBottomBar(category,navController)
+        }
     }
     var stateToggle by remember { mutableStateOf(UserRepository.notification) }
     val context = LocalContext.current
